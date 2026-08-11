@@ -23,7 +23,7 @@ from datetime import date, timedelta
 
 import pandas as pd
 
-from kabu_lib import fetch_codes, filter_true_stopdaka, to_records, archived_url
+from kabu_lib import fetch_codes, filter_true_stopdaka, to_records, archived_url, parse_trade_date_to_iso
 
 START_DATE = date(2026, 7, 1)
 END_DATE = date.today()
@@ -81,6 +81,15 @@ def main():
             time.sleep(0.5)
             continue
 
+        # ページの表示日付が、リクエストした日付と一致するか確認
+        # （祝日などで前営業日のデータがそのまま出ている場合は、実際の取引日として扱う）
+        actual_trade_date = parse_trade_date_to_iso(stopdaka["trade_date"].iloc[0], d)
+        if actual_trade_date != d.isoformat():
+            print(f"  {d}: ページの表示は{actual_trade_date}のデータ（休場日と判断しスキップ）。")
+            d += timedelta(days=1)
+            time.sleep(0.5)
+            continue
+
         stopdaka_full = filter_true_stopdaka(stopdaka)
         dekizou_full = filter_true_stopdaka(dekizou) if dekizou is not None else pd.DataFrame()
         ipo_full = filter_true_stopdaka(ipo) if ipo is not None else pd.DataFrame()
@@ -94,7 +103,7 @@ def main():
 
         matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_stopdaka_full_codes)]
 
-        trade_date = d.isoformat()  # 例: "2026-08-07"（サイトの表示揺れに依存しない固定形式）
+        trade_date = d.isoformat()  # 上のチェックで実際のデータ日付と一致していることを確認済み
         results[trade_date] = {
             "A": to_records(matched_a),
             "B": to_records(dekizou_full),
