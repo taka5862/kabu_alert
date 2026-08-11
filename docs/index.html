@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株ドラゴン アラート結果</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --card-bg: #ffffff;
+    --text: #1c1f26;
+    --muted: #6b7280;
+    --accent: #d81b60;
+    --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 16px 16px 8px;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  header h1 {
+    font-size: 18px;
+    margin: 0 0 12px;
+  }
+  #tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab-btn {
+    flex: 0 0 auto;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .tab-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: bold;
+  }
+  main {
+    padding: 12px 16px 40px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .section h2 {
+    font-size: 15px;
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .count-badge {
+    font-size: 12px;
+    background: var(--bg);
+    color: var(--muted);
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-weight: normal;
+  }
+  .stock-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .stock-list li {
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+  }
+  .stock-list li:first-child { border-top: none; }
+  .stock-list a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .stock-code {
+    color: var(--accent);
+    font-weight: bold;
+    margin-right: 6px;
+  }
+  .empty {
+    color: var(--muted);
+    font-size: 13px;
+    padding: 4px 0;
+  }
+  #status {
+    color: var(--muted);
+    font-size: 13px;
+    padding: 20px 16px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📈 株ドラゴン アラート結果</h1>
+  <div id="tabs"></div>
+</header>
+
+<main id="content">
+  <div id="status">読み込み中...</div>
+</main>
+
+<script>
+const CATEGORY_LABELS = {
+  A: "ストップ高 × 年初来高値",
+  B: "出来高急増 × ストップ高",
+  C: "IPO銘柄 × ストップ高",
+  D: "出来高急増 × 上ひげ陽線（ヒゲ10%以上）",
+};
+const CATEGORY_ORDER = ["A", "B", "C", "D"];
+
+function chartUrl(code) {
+  return `https://kabutan.jp/stock/chart?code=${encodeURIComponent(code)}`;
+}
+
+function renderDay(dateKey, dayData) {
+  const content = document.getElementById("content");
+  content.innerHTML = "";
+
+  CATEGORY_ORDER.forEach((key) => {
+    const stocks = dayData[key] || [];
+    const section = document.createElement("div");
+    section.className = "section";
+
+    const h2 = document.createElement("h2");
+    h2.innerHTML = `${CATEGORY_LABELS[key]} <span class="count-badge">${stocks.length}件</span>`;
+    section.appendChild(h2);
+
+    if (stocks.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      empty.textContent = "該当銘柄なし";
+      section.appendChild(empty);
+    } else {
+      const ul = document.createElement("ul");
+      ul.className = "stock-list";
+      stocks.forEach((s) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = chartUrl(s.code);
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.innerHTML = `<span class="stock-code">${s.code}</span>${s.name}`;
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      section.appendChild(ul);
+    }
+    content.appendChild(section);
+  });
+}
+
+function renderTabs(dates, results) {
+  const tabsEl = document.getElementById("tabs");
+  tabsEl.innerHTML = "";
+  dates.forEach((dateKey, i) => {
+    const btn = document.createElement("button");
+    btn.className = "tab-btn" + (i === 0 ? " active" : "");
+    btn.textContent = dateKey;
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderDay(dateKey, results[dateKey]);
+    });
+    tabsEl.appendChild(btn);
+  });
+}
+
+fetch("results.json?_=" + Date.now())
+  .then((res) => {
+    if (!res.ok) throw new Error("results.json の読み込みに失敗しました");
+    return res.json();
+  })
+  .then((results) => {
+    // 日付の新しい順に並べる（JSONに追加された順の逆）
+    const dates = Object.keys(results).reverse();
+    if (dates.length === 0) {
+      document.getElementById("status").textContent = "まだデータがありません。";
+      return;
+    }
+    renderTabs(dates, results);
+    renderDay(dates[0], results[dates[0]]);
+  })
+  .catch((err) => {
+    document.getElementById("status").textContent = "エラー: " + err.message;
+  });
+</script>
+
+</body>
+</html>
