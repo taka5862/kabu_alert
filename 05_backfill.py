@@ -10,9 +10,10 @@ D（出来高急増×上ひげ陽線）は、始値をみんかぶの「当日�
 仕組みのため、過去日付には対応していません。バックフィルでは A・B・C・E の
 4種類のみを埋めます（D は空欄になります）。
 
-時価総額は「その時点の発行済株式数 × その日の終値」を毎回取得して計算する
-簡易的なものです（キャッシュはしていません）。そのため同じ銘柄でも、日付に
-よって表示される時価総額が多少異なることがあります。
+時価総額は「発行済株式数 × その日の終値」で計算します。発行済株式数は
+このバックフィル実行全体で使い回す一時的なキャッシュを使うため（ファイルには
+保存されません）、同じ銘柄については取得した時点の株式数がその後の日付にも
+使われます（頻繁に変わる情報ではないため、実用上は問題ありません）。
 
 土日・祝日など株ドラゴンにデータが無い日は自動でスキップします。
 
@@ -76,6 +77,7 @@ def fetch_day(d: date):
 def main():
     results = load_results()
     prev_stopdaka_full_codes = set()  # 前の取引日の「本当のストップ高」コード集合
+    shares_session_cache = {}  # このバックフィル実行全体で使い回す（保存はしない）
 
     d = START_DATE
     while d <= END_DATE:
@@ -114,10 +116,10 @@ def main():
 
         matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_stopdaka_full_codes)]
 
-        matched_a = enrich_with_market_cap(matched_a)
-        dekizou_full = enrich_with_market_cap(dekizou_full)
-        ipo_full = enrich_with_market_cap(ipo_full)
-        matched_e = enrich_with_market_cap(matched_e)
+        matched_a = enrich_with_market_cap(matched_a, shares_session_cache)
+        dekizou_full = enrich_with_market_cap(dekizou_full, shares_session_cache)
+        ipo_full = enrich_with_market_cap(ipo_full, shares_session_cache)
+        matched_e = enrich_with_market_cap(matched_e, shares_session_cache)
 
         trade_date = d.isoformat()  # 上のチェックで実際のデータ日付と一致していることを確認済み
         results[trade_date] = {
