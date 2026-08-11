@@ -10,6 +10,10 @@ D（出来高急増×上ひげ陽線）は、始値をみんかぶの「当日�
 仕組みのため、過去日付には対応していません。バックフィルでは A・B・C・E の
 4種類のみを埋めます（D は空欄になります）。
 
+時価総額は「その時点の発行済株式数 × その日の終値」を毎回取得して計算する
+簡易的なものです（キャッシュはしていません）。そのため同じ銘柄でも、日付に
+よって表示される時価総額が多少異なることがあります。
+
 土日・祝日など株ドラゴンにデータが無い日は自動でスキップします。
 
 使い方：
@@ -23,7 +27,14 @@ from datetime import date, timedelta
 
 import pandas as pd
 
-from kabu_lib import fetch_codes, filter_true_stopdaka, to_records, archived_url, parse_trade_date_to_iso
+from kabu_lib import (
+    fetch_codes,
+    filter_true_stopdaka,
+    to_records,
+    archived_url,
+    parse_trade_date_to_iso,
+    enrich_with_market_cap,
+)
 
 START_DATE = date(2026, 7, 1)
 END_DATE = date.today()
@@ -96,12 +107,17 @@ def main():
 
         matched_a = pd.merge(
             takane[["code", "name"]] if takane is not None else pd.DataFrame(columns=["code", "name"]),
-            stopdaka_full[["code", "name"]],
+            stopdaka_full[["code", "name", "close"]],
             on="code",
             suffixes=("", "_y"),
         )
 
         matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_stopdaka_full_codes)]
+
+        matched_a = enrich_with_market_cap(matched_a)
+        dekizou_full = enrich_with_market_cap(dekizou_full)
+        ipo_full = enrich_with_market_cap(ipo_full)
+        matched_e = enrich_with_market_cap(matched_e)
 
         trade_date = d.isoformat()  # 上のチェックで実際のデータ日付と一致していることを確認済み
         results[trade_date] = {
