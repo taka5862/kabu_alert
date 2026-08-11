@@ -88,7 +88,7 @@ def main():
     print(f"  ストップ高候補: {len(stopdaka)} 銘柄 / 本当のストップ高: {len(stopdaka_full)} 銘柄")
     print(f"  年初来高値更新: {len(takane)} 銘柄")
 
-    trade_date = stopdaka["trade_date"].iloc[0] if not stopdaka.empty else "unknown"
+    trade_date = date.today().isoformat()  # 例: "2026-08-11"（サイトの表示揺れに依存しない固定形式）
 
     # ---- A) 年初来高値 × ストップ高 ----
     matched_a = pd.merge(
