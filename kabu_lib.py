@@ -155,8 +155,10 @@ def fetch_shares_outstanding(code: str) -> int:
         m = re.search(r"発行済株式数[^0-9]*([\d,]+)\s*株", res.text)
         if m:
             return int(m.group(1).replace(",", ""))
-    except Exception:
-        pass
+        else:
+            print(f"    [発行済株式数] {code}: パターンが見つかりませんでした（status={res.status_code}, 本文長={len(res.text)}）")
+    except Exception as e:
+        print(f"    [発行済株式数] {code}: 取得エラー {e}")
     return None
 
 
