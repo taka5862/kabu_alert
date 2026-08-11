@@ -56,8 +56,16 @@ def fetch_impact_links() -> list:
     res.raise_for_status()
     res.encoding = res.apparent_encoding
 
+    all_links = LINK_PATTERN.findall(res.text)
+    print(f"  [診断] status={res.status_code}, 本文長={len(res.text)}")
+    print(f"  [診断] LINK_PATTERNで見つかったリンク総数: {len(all_links)}")
+    for kw in KEYWORDS:
+        print(f"  [診断] 本文中に「{kw}」という文字列: {res.text.count(kw)} 箇所")
+    if all_links[:3]:
+        print(f"  [診断] リンクの例: {all_links[:3]}")
+
     found = []
-    for url, title in LINK_PATTERN.findall(res.text):
+    for url, title in all_links:
         if not any(kw in title for kw in KEYWORDS):
             continue
         if url.startswith("/"):
