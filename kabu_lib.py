@@ -147,18 +147,22 @@ def to_records(df: pd.DataFrame) -> list:
 
 
 def fetch_shares_outstanding(code: str) -> int:
-    """Yahoo!ファイナンスの個別銘柄ページから「発行済株式数」を取得する"""
+    """Yahoo!ファイナンスの個別銘柄ページから「発行済株式数」を取得する（1回だけリトライする）"""
     url = f"https://finance.yahoo.co.jp/quote/{code}.T"
-    try:
-        res = requests.get(url, headers=HEADERS, timeout=15)
-        res.raise_for_status()
-        m = re.search(r"発行済株式数[^0-9]*([\d,]+)\s*株", res.text)
-        if m:
-            return int(m.group(1).replace(",", ""))
-        else:
+    for attempt in range(2):
+        try:
+            res = requests.get(url, headers=HEADERS, timeout=15)
+            res.raise_for_status()
+            m = re.search(r"発行済株式数[^0-9]*([\d,]+)\s*株", res.text)
+            if m:
+                return int(m.group(1).replace(",", ""))
             print(f"    [発行済株式数] {code}: パターンが見つかりませんでした（status={res.status_code}, 本文長={len(res.text)}）")
-    except Exception as e:
-        print(f"    [発行済株式数] {code}: 取得エラー {e}")
+            return None
+        except Exception as e:
+            if attempt == 0:
+                time.sleep(2)  # 一時的なエラーの可能性があるので少し待って1回だけ再試行
+                continue
+            print(f"    [発行済株式数] {code}: 取得エラー（リトライ後も失敗） {e}")
     return None
 
 
@@ -173,21 +177,31 @@ def format_market_cap(yen: float) -> str:
         return f"{yen/10000:,.0f}万円"
 
 
-def enrich_with_market_cap(df: pd.DataFrame) -> pd.DataFrame:
+def enrich_with_market_cap(df: pd.DataFrame, session_cache: dict = None) -> pd.DataFrame:
     """
     df（code, close列を含む）に、時価総額の表示用ラベル "cap_label" 列を追加する。
-    その時点の発行済株式数 × その日の終値、で毎回計算する（キャッシュなし）。
+    その時点の発行済株式数 × その日の終値、で計算する。
+    session_cache を渡すと、同じ実行の中で同じ銘柄への重複アクセスを避けられる
+    （ファイルには保存されず、実行が終われば消える一時的なものです）。
     """
     if df.empty:
         df = df.copy()
         df["cap_label"] = []
         return df
 
+    if session_cache is None:
+        session_cache = {}
+
     df = df.copy()
     labels = []
     for _, row in df.iterrows():
-        shares = fetch_shares_outstanding(row["code"])
-        time.sleep(0.3)  # 相手サイトへの配慮
+        code = row["code"]
+        if code in session_cache:
+            shares = session_cache[code]
+        else:
+            shares = fetch_shares_outstanding(code)
+            session_cache[code] = shares
+            time.sleep(0.3)  # 相手サイトへの配慮
         close = row.get("close")
         if shares and pd.notna(close):
             labels.append(format_market_cap(shares * close))
