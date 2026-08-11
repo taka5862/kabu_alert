@@ -33,6 +33,7 @@ from kabu_lib import (
     fetch_open_price,
     to_records,
     archived_url,
+    parse_trade_date_to_iso,
 )
 
 STOPDAKA_URL = "https://www.kabudragon.com/ranking/stopdaka200.html"  # 200件表示
@@ -88,7 +89,13 @@ def main():
     print(f"  ストップ高候補: {len(stopdaka)} 銘柄 / 本当のストップ高: {len(stopdaka_full)} 銘柄")
     print(f"  年初来高値更新: {len(takane)} 銘柄")
 
-    trade_date = date.today().isoformat()  # 例: "2026-08-11"（サイトの表示揺れに依存しない固定形式）
+    # 「今日」ではなく、サイトが実際に表示しているデータの日付を使う
+    # （休日でサイトが未更新の場合、前営業日のデータがそのまま出ているため）
+    if not stopdaka.empty:
+        trade_date = parse_trade_date_to_iso(stopdaka["trade_date"].iloc[0], date.today())
+    else:
+        trade_date = date.today().isoformat()
+    data_date = date.fromisoformat(trade_date)
 
     # ---- A) 年初来高値 × ストップ高 ----
     matched_a = pd.merge(
@@ -123,8 +130,7 @@ def main():
     print(f"  [D] うちヒゲ{int(UWAHIGE_MIN_RATIO*100)}%以上: {len(long_wick_rows)} 銘柄")
 
     # ---- E) 2営業日連続ストップ高 ----
-    today = date.today()
-    prev_stopdaka_full = find_previous_trading_day_stopdaka(today)
+    prev_stopdaka_full = find_previous_trading_day_stopdaka(data_date)
     prev_codes = set(prev_stopdaka_full["code"]) if not prev_stopdaka_full.empty else set()
     matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_codes)]
     print(f"  [E] 2営業日連続ストップ高: {len(matched_e)} 銘柄")
