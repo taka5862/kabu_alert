@@ -94,7 +94,7 @@ def main():
 
         matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_stopdaka_full_codes)]
 
-        trade_date = stopdaka["trade_date"].iloc[0]
+        trade_date = d.isoformat()  # 例: "2026-08-07"（サイトの表示揺れに依存しない固定形式）
         results[trade_date] = {
             "A": to_records(matched_a),
             "B": to_records(dekizou_full),
