@@ -2,29 +2,38 @@
 """
 03_alert_kabudragon.py
 ------------------------
-株ドラゴンのランキングページを取得し、以下4つの組み合わせに該当する銘柄を
+株ドラゴンのランキングページを取得し、以下5つの組み合わせに該当する銘柄を
 docs/results.json に書き出します（Webページ表示用）。
 
-  A) ストップ高 × 年初来高値
+  A) 年初来高値 × ストップ高
   B) 出来高急増 × ストップ高
   C) IPO銘柄 × ストップ高
   D) 出来高急増 × 上ひげ陽線（上ひげの長さが始値の10%以上のもののみ）
+  E) 2営業日連続ストップ高
 
 前提：
 - 株ドラゴンは毎日21時頃に更新されるので、このスクリプトも21時以降に
   実行してください（21時前に実行すると前日のデータのままです）。
+- 同じフォルダに kabu_lib.py が必要です。
 
 使い方：
     python 03_alert_kabudragon.py
 """
 
-import re
 import os
-import io
 import json
 import time
-import requests
+from datetime import date, timedelta
+
 import pandas as pd
+
+from kabu_lib import (
+    fetch_codes,
+    filter_true_stopdaka,
+    fetch_open_price,
+    to_records,
+    archived_url,
+)
 
 STOPDAKA_URL = "https://www.kabudragon.com/ranking/stopdaka200.html"  # 200件表示
 TAKANE_URL = "https://www.kabudragon.com/ranking/takane200.html"      # 200件表示
@@ -37,102 +46,23 @@ UWAHIGE_MIN_RATIO = 0.10  # 上ひげの長さ判定：(高値-始値)/始値 �
 
 RESULTS_FILE = "docs/results.json"  # Webページが読み込むデータファイル
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-}
 
-# 東証公式「制限値幅」テーブル（2026/08/10時点）
-# (基準値段の上限（未満）, その価格帯の制限値幅)
-PRICE_LIMIT_TABLE = [
-    (100, 30), (200, 50), (500, 80), (700, 100), (1000, 150),
-    (1500, 300), (2000, 400), (3000, 500), (5000, 700), (7000, 1000),
-    (10000, 1500), (15000, 3000), (20000, 4000), (30000, 5000),
-    (50000, 7000), (70000, 10000), (100000, 15000), (150000, 30000),
-    (200000, 40000), (300000, 50000), (500000, 70000), (700000, 100000),
-    (1000000, 150000), (1500000, 300000), (2000000, 400000),
-    (3000000, 500000), (5000000, 700000), (7000000, 1000000),
-    (10000000, 1500000), (15000000, 3000000), (20000000, 4000000),
-    (30000000, 5000000), (50000000, 7000000),
-]
-
-
-def price_limit_width(base_price: float) -> float:
-    """前日終値（基準値段）から、その日の制限値幅（上下の値幅）を返す"""
-    for upper, width in PRICE_LIMIT_TABLE:
-        if base_price < upper:
-            return width
-    return 10000000  # 50,000,000円以上
-
-
-def fetch_codes(url: str) -> pd.DataFrame:
-    """株ドラゴンのランキングページから コード・名称・取引値（終値）・前日比額・高値 を取り出す"""
-    res = requests.get(url, headers=HEADERS, timeout=20)
-    res.raise_for_status()
-    res.encoding = res.apparent_encoding
-
-    tables = pd.read_html(io.StringIO(res.text))
-    # 一番大きい（行数が多い）表が銘柄一覧のはず
-    main_table = max(tables, key=len)
-
-    # 列名がページによって少し違うので、位置で拾う
-    # 想定：0=順位, 1=コード, 2=名称, 3=市場, 4=日付, 5=取引値(終値), 6=前日比額,
-    #       ... 出来高, 高値, 安値（高値・安値は必ず最後の2列）
-    main_table = main_table.dropna(how="all")
-    main_table.columns = [str(c) for c in main_table.columns]
-
-    def to_num(series):
-        return pd.to_numeric(
-            series.astype(str).str.replace(",", "").str.replace("−", "-"),
-            errors="coerce",
-        )
-
-    df = pd.DataFrame()
-    df["code"] = main_table.iloc[:, 1].astype(str)
-    df["name"] = main_table.iloc[:, 2].astype(str)
-    df["trade_date"] = main_table.iloc[:, 4].astype(str)  # 例："8/7(金)"
-    df["close"] = to_num(main_table.iloc[:, 5])       # 取引値（終値）
-    df["change_amt"] = to_num(main_table.iloc[:, 6])  # 前日比額
-    df["high"] = to_num(main_table.iloc[:, -2])       # 高値（後ろから2列目）
-    # コード列に数字4桁+英数字のものだけ残す（ヘッダ行などを除外）
-    df = df[df["code"].str.match(r"^\d{3,4}[A-Z0-9]?$")]
-    return df.reset_index(drop=True)
-
-
-def filter_true_stopdaka(df: pd.DataFrame) -> pd.DataFrame:
+def find_previous_trading_day_stopdaka(today: date) -> pd.DataFrame:
     """
-    df（close, change_amt列を含む）から、東証の制限値幅テーブルで計算した
-    「本当のストップ高価格」と終値が一致する行だけを残す
+    今日より前の直近の取引日（土日・休場日はスキップ）の
+    「本当にストップ高で引けた」銘柄一覧を、株ドラゴンの過去日付ページから取得する
     """
-    df = df.copy()
-    df["prev_close"] = df["close"] - df["change_amt"]
-    df["stop_high_price"] = df["prev_close"].apply(
-        lambda p: p + price_limit_width(p) if pd.notna(p) else None
-    )
-    return df[
-        (df["stop_high_price"].notna())
-        & ((df["close"] - df["stop_high_price"]).abs() <= 3)
-    ]
-
-
-def fetch_open_price(code: str) -> float:
-    """みんかぶの個別銘柄チャートページから、その日の「始値」を取得する"""
-    url = f"https://minkabu.jp/stock/{code}/chart"
-    try:
-        res = requests.get(url, headers=HEADERS, timeout=15)
-        res.raise_for_status()
-        m = re.search(r"始値[：:]\s*([\d,]+\.?\d*)円", res.text)
-        if m:
-            return float(m.group(1).replace(",", ""))
-    except Exception:
-        pass
-    return None
-
-
-def to_records(df: pd.DataFrame) -> list:
-    """DataFrame（code, name列を含む）を、Webページ用の [{"code":.., "name":..}, ...] に変換"""
-    if df.empty:
-        return []
-    return df[["code", "name"]].to_dict("records")
+    d = today - timedelta(days=1)
+    for _ in range(7):  # 最大7日さかのぼる（連休対策）
+        url = archived_url("stopdaka", d)
+        try:
+            df = fetch_codes(url)
+            if not df.empty:
+                return filter_true_stopdaka(df)
+        except Exception:
+            pass
+        d -= timedelta(days=1)
+    return pd.DataFrame(columns=["code", "name", "trade_date"])
 
 
 def load_results() -> dict:
@@ -151,20 +81,23 @@ def save_results(data: dict):
 def main():
     print("株ドラゴンのデータを取得しています...")
 
-    # ---- A) ストップ高 × 年初来高値 ----
+    # ---- ストップ高・年初来高値の基本データ ----
     stopdaka = fetch_codes(STOPDAKA_URL)
     takane = fetch_codes(TAKANE_URL)
     stopdaka_full = filter_true_stopdaka(stopdaka)
-    print(f"  [A] ストップ高候補: {len(stopdaka)} 銘柄 / 本当のストップ高: {len(stopdaka_full)} 銘柄")
-    print(f"  [A] 年初来高値更新: {len(takane)} 銘柄")
+    print(f"  ストップ高候補: {len(stopdaka)} 銘柄 / 本当のストップ高: {len(stopdaka_full)} 銘柄")
+    print(f"  年初来高値更新: {len(takane)} 銘柄")
+
+    trade_date = stopdaka["trade_date"].iloc[0] if not stopdaka.empty else "unknown"
+
+    # ---- A) 年初来高値 × ストップ高 ----
     matched_a = pd.merge(
-        stopdaka_full[["code", "name", "trade_date"]],
         takane[["code", "name"]],
+        stopdaka_full[["code", "name", "trade_date"]],
         on="code",
         suffixes=("", "_y"),
     )
-
-    trade_date = stopdaka["trade_date"].iloc[0] if not stopdaka.empty else "unknown"
+    print(f"  [A] 年初来高値×ストップ高: {len(matched_a)} 銘柄")
 
     # ---- B) 出来高急増 × ストップ高 ----
     dekizou = fetch_codes(DEKIZOU_URL)
@@ -186,8 +119,15 @@ def main():
             wick_ratio = (row["high"] - open_price) / open_price
             if wick_ratio >= UWAHIGE_MIN_RATIO:
                 long_wick_rows.append({"code": row["code"], "name": row["name"]})
-        time.sleep(0.3)  # 相手サイトへの配慮（連続アクセスを避ける）
+        time.sleep(0.3)
     print(f"  [D] うちヒゲ{int(UWAHIGE_MIN_RATIO*100)}%以上: {len(long_wick_rows)} 銘柄")
+
+    # ---- E) 2営業日連続ストップ高 ----
+    today = date.today()
+    prev_stopdaka_full = find_previous_trading_day_stopdaka(today)
+    prev_codes = set(prev_stopdaka_full["code"]) if not prev_stopdaka_full.empty else set()
+    matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_codes)]
+    print(f"  [E] 2営業日連続ストップ高: {len(matched_e)} 銘柄")
 
     # ---- 結果をJSONにまとめて保存 ----
     results = load_results()
@@ -196,6 +136,7 @@ def main():
         "B": to_records(dekizou_full),
         "C": to_records(ipo_full),
         "D": long_wick_rows,
+        "E": to_records(matched_e),
     }
     save_results(results)
     print(f"{trade_date} の結果を {RESULTS_FILE} に保存しました。")
