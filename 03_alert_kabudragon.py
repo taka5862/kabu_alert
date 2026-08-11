@@ -84,6 +84,7 @@ def save_results(data: dict):
 
 def main():
     print("株ドラゴンのデータを取得しています...")
+    shares_session_cache = {}  # この実行の中だけで使い回す（保存はしない）
 
     # ---- ストップ高・年初来高値の基本データ ----
     stopdaka = fetch_codes(STOPDAKA_URL)
@@ -107,19 +108,19 @@ def main():
         on="code",
         suffixes=("", "_y"),
     )
-    matched_a = enrich_with_market_cap(matched_a)
+    matched_a = enrich_with_market_cap(matched_a, shares_session_cache)
     print(f"  [A] 年初来高値×ストップ高: {len(matched_a)} 銘柄")
 
     # ---- B) 出来高急増 × ストップ高 ----
     dekizou = fetch_codes(DEKIZOU_URL)
     dekizou_full = filter_true_stopdaka(dekizou)
-    dekizou_full = enrich_with_market_cap(dekizou_full)
+    dekizou_full = enrich_with_market_cap(dekizou_full, shares_session_cache)
     print(f"  [B] 出来高急増候補: {len(dekizou)} 銘柄 / うち本当のストップ高: {len(dekizou_full)} 銘柄")
 
     # ---- C) IPO銘柄 × ストップ高 ----
     ipo = fetch_codes(IPO_URL)
     ipo_full = filter_true_stopdaka(ipo)
-    ipo_full = enrich_with_market_cap(ipo_full)
+    ipo_full = enrich_with_market_cap(ipo_full, shares_session_cache)
     print(f"  [C] IPO銘柄候補: {len(ipo)} 銘柄 / うち本当のストップ高: {len(ipo_full)} 銘柄")
 
     # ---- D) 出来高急増 × 上ひげ陽線（ヒゲの長さが10%以上のみ）----
@@ -132,7 +133,11 @@ def main():
             wick_ratio = (row["high"] - open_price) / open_price
             if wick_ratio >= UWAHIGE_MIN_RATIO:
                 code = row["code"]
-                shares = fetch_shares_outstanding(code)
+                if code in shares_session_cache:
+                    shares = shares_session_cache[code]
+                else:
+                    shares = fetch_shares_outstanding(code)
+                    shares_session_cache[code] = shares
                 cap = format_market_cap(shares * row["close"]) if shares and pd.notna(row["close"]) else None
                 long_wick_rows.append({"code": code, "name": row["name"], "cap": cap})
         time.sleep(0.3)
@@ -142,7 +147,7 @@ def main():
     prev_stopdaka_full = find_previous_trading_day_stopdaka(data_date)
     prev_codes = set(prev_stopdaka_full["code"]) if not prev_stopdaka_full.empty else set()
     matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_codes)]
-    matched_e = enrich_with_market_cap(matched_e)
+    matched_e = enrich_with_market_cap(matched_e, shares_session_cache)
     print(f"  [E] 2営業日連続ストップ高: {len(matched_e)} 銘柄")
 
     # ---- 結果をJSONにまとめて保存 ----
