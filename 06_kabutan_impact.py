@@ -28,9 +28,9 @@ HEADERS = {
 # タイトルに含まれていれば対象とみなすキーワード
 KEYWORDS = ["決算プラス・インパクト", "決算マイナス・インパクト"]
 
-# <a href="...">タイトル</a> を抜き出す（相対URL・絶対URL両対応）
+# <a ... href="...">タイトル</a> を抜き出す（class等の属性がhrefより先にあっても対応）
 LINK_PATTERN = re.compile(
-    r'<a\s+href="(https?://s\.kabutan\.jp/news/n\d+/?|/news/n\d+/?)"[^>]*>\s*([^<]+?)\s*</a>',
+    r'<a\b[^>]*\bhref="((?:https?://s\.kabutan\.jp)?/news/n\d+/?)"[^>]*>\s*([^<]+?)\s*</a>',
     re.IGNORECASE,
 )
 
