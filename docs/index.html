@@ -128,12 +128,13 @@
 
 <script>
 const CATEGORY_LABELS = {
-  A: "ストップ高 × 年初来高値",
+  A: "年初来高値 × ストップ高",
   B: "出来高急増 × ストップ高",
   C: "IPO銘柄 × ストップ高",
   D: "出来高急増 × 上ひげ陽線（ヒゲ10%以上）",
+  E: "2営業日連続ストップ高",
 };
-const CATEGORY_ORDER = ["A", "B", "C", "D"];
+const CATEGORY_ORDER = ["A", "B", "C", "D", "E"];
 
 function chartUrl(code) {
   return `https://kabutan.jp/stock/chart?code=${encodeURIComponent(code)}`;
