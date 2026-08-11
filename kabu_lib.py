@@ -9,6 +9,7 @@ kabu_lib.py
 
 import re
 import io
+import time
 import requests
 import pandas as pd
 
@@ -126,7 +127,69 @@ def parse_trade_date_to_iso(raw: str, reference) -> str:
 
 
 def to_records(df: pd.DataFrame) -> list:
-    """DataFrame（code, name列を含む）を、Webページ用の [{"code":.., "name":..}, ...] に変換"""
+    """
+    DataFrame（code, name列を含む。cap_label列があれば含める）を、
+    Webページ用の [{"code":.., "name":.., "cap":..}, ...] に変換
+    """
     if df.empty:
         return []
-    return df[["code", "name"]].to_dict("records")
+    cols = ["code", "name"]
+    if "cap_label" in df.columns:
+        cols.append("cap_label")
+    records = df[cols].to_dict("records")
+    for r in records:
+        if "cap_label" in r:
+            r["cap"] = r.pop("cap_label")
+    return records
+
+
+# ==== 時価総額（毎回、その時点の終値ベースで計算）====
+
+
+def fetch_shares_outstanding(code: str) -> int:
+    """Yahoo!ファイナンスの個別銘柄ページから「発行済株式数」を取得する"""
+    url = f"https://finance.yahoo.co.jp/quote/{code}.T"
+    try:
+        res = requests.get(url, headers=HEADERS, timeout=15)
+        res.raise_for_status()
+        m = re.search(r"発行済株式数[^0-9]*([\d,]+)\s*株", res.text)
+        if m:
+            return int(m.group(1).replace(",", ""))
+    except Exception:
+        pass
+    return None
+
+
+def format_market_cap(yen: float) -> str:
+    """円換算の時価総額を、見やすい「◯◯億円」「◯.◯兆円」形式にする"""
+    oku = yen / 100_000_000  # 億円換算
+    if oku >= 10000:
+        return f"{oku/10000:.2f}兆円"
+    elif oku >= 1:
+        return f"{oku:,.0f}億円"
+    else:
+        return f"{yen/10000:,.0f}万円"
+
+
+def enrich_with_market_cap(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    df（code, close列を含む）に、時価総額の表示用ラベル "cap_label" 列を追加する。
+    その時点の発行済株式数 × その日の終値、で毎回計算する（キャッシュなし）。
+    """
+    if df.empty:
+        df = df.copy()
+        df["cap_label"] = []
+        return df
+
+    df = df.copy()
+    labels = []
+    for _, row in df.iterrows():
+        shares = fetch_shares_outstanding(row["code"])
+        time.sleep(0.3)  # 相手サイトへの配慮
+        close = row.get("close")
+        if shares and pd.notna(close):
+            labels.append(format_market_cap(shares * close))
+        else:
+            labels.append(None)
+    df["cap_label"] = labels
+    return df
