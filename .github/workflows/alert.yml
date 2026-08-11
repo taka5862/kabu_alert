@@ -27,10 +27,13 @@ jobs:
       - name: アラートスクリプトを実行
         run: python 03_alert_kabudragon.py
 
+      - name: 決算インパクト記事リンクを取得
+        run: python 06_kabutan_impact.py
+
       - name: 結果をリポジトリに保存（Webページに反映）
         run: |
           git config user.name "kabudragon-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add docs/results.json
-          git diff --quiet --cached || git commit -m "update results.json"
+          git add docs/results.json docs/impact.json
+          git diff --quiet --cached || git commit -m "update results.json / impact.json"
           git push
