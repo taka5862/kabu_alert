@@ -31,9 +31,12 @@ from kabu_lib import (
     fetch_codes,
     filter_true_stopdaka,
     fetch_open_price,
+    fetch_shares_outstanding,
     to_records,
     archived_url,
     parse_trade_date_to_iso,
+    enrich_with_market_cap,
+    format_market_cap,
 )
 
 STOPDAKA_URL = "https://www.kabudragon.com/ranking/stopdaka200.html"  # 200件表示
@@ -100,20 +103,23 @@ def main():
     # ---- A) 年初来高値 × ストップ高 ----
     matched_a = pd.merge(
         takane[["code", "name"]],
-        stopdaka_full[["code", "name", "trade_date"]],
+        stopdaka_full[["code", "name", "trade_date", "close"]],
         on="code",
         suffixes=("", "_y"),
     )
+    matched_a = enrich_with_market_cap(matched_a)
     print(f"  [A] 年初来高値×ストップ高: {len(matched_a)} 銘柄")
 
     # ---- B) 出来高急増 × ストップ高 ----
     dekizou = fetch_codes(DEKIZOU_URL)
     dekizou_full = filter_true_stopdaka(dekizou)
+    dekizou_full = enrich_with_market_cap(dekizou_full)
     print(f"  [B] 出来高急増候補: {len(dekizou)} 銘柄 / うち本当のストップ高: {len(dekizou_full)} 銘柄")
 
     # ---- C) IPO銘柄 × ストップ高 ----
     ipo = fetch_codes(IPO_URL)
     ipo_full = filter_true_stopdaka(ipo)
+    ipo_full = enrich_with_market_cap(ipo_full)
     print(f"  [C] IPO銘柄候補: {len(ipo)} 銘柄 / うち本当のストップ高: {len(ipo_full)} 銘柄")
 
     # ---- D) 出来高急増 × 上ひげ陽線（ヒゲの長さが10%以上のみ）----
@@ -125,7 +131,10 @@ def main():
         if open_price and open_price > 0 and pd.notna(row["high"]):
             wick_ratio = (row["high"] - open_price) / open_price
             if wick_ratio >= UWAHIGE_MIN_RATIO:
-                long_wick_rows.append({"code": row["code"], "name": row["name"]})
+                code = row["code"]
+                shares = fetch_shares_outstanding(code)
+                cap = format_market_cap(shares * row["close"]) if shares and pd.notna(row["close"]) else None
+                long_wick_rows.append({"code": code, "name": row["name"], "cap": cap})
         time.sleep(0.3)
     print(f"  [D] うちヒゲ{int(UWAHIGE_MIN_RATIO*100)}%以上: {len(long_wick_rows)} 銘柄")
 
@@ -133,6 +142,7 @@ def main():
     prev_stopdaka_full = find_previous_trading_day_stopdaka(data_date)
     prev_codes = set(prev_stopdaka_full["code"]) if not prev_stopdaka_full.empty else set()
     matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_codes)]
+    matched_e = enrich_with_market_cap(matched_e)
     print(f"  [E] 2営業日連続ストップ高: {len(matched_e)} 銘柄")
 
     # ---- 結果をJSONにまとめて保存 ----
