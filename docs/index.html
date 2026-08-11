@@ -155,6 +155,11 @@
     font-weight: bold;
     margin-right: 6px;
   }
+  .stock-cap {
+    color: var(--muted);
+    font-size: 12px;
+    margin-left: 4px;
+  }
   .empty {
     color: var(--muted);
     font-size: 13px;
@@ -170,7 +175,7 @@
 <body>
 
 <header>
-  <h1>📈 株ドラゴン アラート結果</h1>
+  <h1>📈 株ドラゴン アラート結果 <a href="impact.html" style="font-size:12px; color:#d81b60;">決算インパクト記事 →</a></h1>
 </header>
 
 <main>
@@ -246,7 +251,7 @@ function renderDay(dateKey) {
         a.href = chartUrl(s.code);
         a.target = "_blank";
         a.rel = "noopener";
-        a.innerHTML = `<span class="stock-code">${s.code}</span>${s.name}`;
+        a.innerHTML = `<span class="stock-code">${s.code}</span>${s.name}${s.cap ? ` <span class="stock-cap">${s.cap}</span>` : ""}`;
         li.appendChild(a);
         ul.appendChild(li);
       });
