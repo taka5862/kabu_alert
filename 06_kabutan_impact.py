@@ -60,7 +60,11 @@ def fetch_impact_links() -> list:
     print(f"  [診断] status={res.status_code}, 本文長={len(res.text)}")
     print(f"  [診断] LINK_PATTERNで見つかったリンク総数: {len(all_links)}")
     for kw in KEYWORDS:
-        print(f"  [診断] 本文中に「{kw}」という文字列: {res.text.count(kw)} 箇所")
+        idx = res.text.find(kw)
+        print(f"  [診断] 「{kw}」: {res.text.count(kw)} 箇所")
+        if idx != -1:
+            snippet = res.text[max(0, idx - 300):idx + 100]
+            print(f"  [診断] 周辺のHTML:\n{snippet}\n  ----")
     if all_links[:3]:
         print(f"  [診断] リンクの例: {all_links[:3]}")
 
