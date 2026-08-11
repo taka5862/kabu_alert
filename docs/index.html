@@ -43,47 +43,53 @@
   .cal-nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 6px;
   }
   .cal-nav button {
     border: none;
     background: none;
-    font-size: 20px;
+    font-size: 16px;
     color: var(--accent);
-    padding: 4px 10px;
+    padding: 2px 6px;
     cursor: pointer;
   }
   .cal-nav button:disabled {
-    color: var(--muted);
+    color: var(--border);
     cursor: default;
   }
   .cal-month-label {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
+    min-width: 90px;
+    text-align: center;
   }
   .cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    margin-bottom: 6px;
+    gap: 2px;
+    margin: 0 auto 4px;
+    max-width: 260px;
   }
   .cal-weekday {
     text-align: center;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--muted);
-    padding: 2px 0;
+    padding: 1px 0;
   }
   .cal-day {
     aspect-ratio: 1;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
-    font-size: 13px;
+    border-radius: 6px;
+    font-size: 11px;
     border: none;
     background: none;
     color: var(--muted);
+    padding: 0;
   }
   .cal-day.has-data {
     background: var(--accent-soft);
