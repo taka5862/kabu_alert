@@ -9,8 +9,9 @@
     --bg: #f5f6f8;
     --card-bg: #ffffff;
     --text: #1c1f26;
-    --muted: #6b7280;
+    --muted: #9ca3af;
     --accent: #d81b60;
+    --accent-soft: #fbe4ec;
     --border: #e5e7eb;
   }
   * { box-sizing: border-box; }
@@ -21,7 +22,7 @@
     color: var(--text);
   }
   header {
-    padding: 16px 16px 8px;
+    padding: 16px 16px 4px;
     background: var(--card-bg);
     border-bottom: 1px solid var(--border);
     position: sticky;
@@ -32,34 +33,77 @@
     font-size: 18px;
     margin: 0 0 12px;
   }
-  #tabs {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 8px;
-    -webkit-overflow-scrolling: touch;
-  }
-  .tab-btn {
-    flex: 0 0 auto;
-    padding: 8px 14px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-  .tab-btn.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-    font-weight: bold;
-  }
   main {
     padding: 12px 16px 40px;
-    max-width: 640px;
+    max-width: 480px;
     margin: 0 auto;
+  }
+
+  /* ---- カレンダー ---- */
+  .cal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .cal-nav button {
+    border: none;
+    background: none;
+    font-size: 20px;
+    color: var(--accent);
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+  .cal-nav button:disabled {
+    color: var(--muted);
+    cursor: default;
+  }
+  .cal-month-label {
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .cal-weekday {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 2px 0;
+  }
+  .cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 13px;
+    border: none;
+    background: none;
+    color: var(--muted);
+  }
+  .cal-day.has-data {
+    background: var(--accent-soft);
+    color: var(--text);
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .cal-day.selected {
+    background: var(--accent);
+    color: #fff;
+  }
+  .cal-day.empty-cell {
+    visibility: hidden;
+  }
+
+  /* ---- 結果カード ---- */
+  .selected-date-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 16px 0 8px;
   }
   .section {
     background: var(--card-bg);
@@ -111,7 +155,7 @@
   #status {
     color: var(--muted);
     font-size: 13px;
-    padding: 20px 16px;
+    padding: 20px 0;
   }
 </style>
 </head>
@@ -119,11 +163,19 @@
 
 <header>
   <h1>📈 株ドラゴン アラート結果</h1>
-  <div id="tabs"></div>
 </header>
 
-<main id="content">
+<main>
+  <div class="cal-nav">
+    <button id="prevMonth">‹</button>
+    <span class="cal-month-label" id="monthLabel"></span>
+    <button id="nextMonth">›</button>
+  </div>
+  <div class="cal-grid" id="calWeekdays"></div>
+  <div class="cal-grid" id="calDays"></div>
+
   <div id="status">読み込み中...</div>
+  <div id="content"></div>
 </main>
 
 <script>
@@ -135,14 +187,33 @@ const CATEGORY_LABELS = {
   E: "2営業日連続ストップ高",
 };
 const CATEGORY_ORDER = ["A", "B", "C", "D", "E"];
+const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
+
+let RESULTS = {};
+let AVAILABLE_DATES = []; // ISO文字列の配列（データがある日）
+let selectedDate = null;
+let calYear, calMonth; // カレンダーが今表示している年月（0-indexed月）
 
 function chartUrl(code) {
   return `https://kabutan.jp/stock/chart?code=${encodeURIComponent(code)}`;
 }
 
-function renderDay(dateKey, dayData) {
+function formatDateLabel(isoDate) {
+  const d = new Date(isoDate + "T00:00:00+09:00");
+  return `${d.getMonth() + 1}/${d.getDate()}(${WEEKDAYS[d.getDay()]})`;
+}
+
+function renderDay(dateKey) {
+  const dayData = RESULTS[dateKey];
   const content = document.getElementById("content");
+  const status = document.getElementById("status");
+  status.textContent = "";
   content.innerHTML = "";
+
+  const label = document.createElement("div");
+  label.className = "selected-date-label";
+  label.textContent = formatDateLabel(dateKey) + " の結果";
+  content.appendChild(label);
 
   CATEGORY_ORDER.forEach((key) => {
     const stocks = dayData[key] || [];
@@ -177,21 +248,73 @@ function renderDay(dateKey, dayData) {
   });
 }
 
-function renderTabs(dates, results) {
-  const tabsEl = document.getElementById("tabs");
-  tabsEl.innerHTML = "";
-  dates.forEach((dateKey, i) => {
-    const btn = document.createElement("button");
-    btn.className = "tab-btn" + (i === 0 ? " active" : "");
-    btn.textContent = dateKey;
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderDay(dateKey, results[dateKey]);
-    });
-    tabsEl.appendChild(btn);
+function selectDate(dateKey) {
+  selectedDate = dateKey;
+  renderCalendarDays();
+  renderDay(dateKey);
+}
+
+function renderWeekdayHeader() {
+  const el = document.getElementById("calWeekdays");
+  el.innerHTML = "";
+  WEEKDAYS.forEach((w) => {
+    const div = document.createElement("div");
+    div.className = "cal-weekday";
+    div.textContent = w;
+    el.appendChild(div);
   });
 }
+
+function renderCalendarDays() {
+  const el = document.getElementById("calDays");
+  el.innerHTML = "";
+
+  document.getElementById("monthLabel").textContent = `${calYear}年 ${calMonth + 1}月`;
+
+  const firstDay = new Date(calYear, calMonth, 1);
+  const startOffset = firstDay.getDay(); // 0=日
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+  for (let i = 0; i < startOffset; i++) {
+    const empty = document.createElement("div");
+    empty.className = "cal-day empty-cell";
+    el.appendChild(empty);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const iso = `${calYear}-${String(calMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const btn = document.createElement("button");
+    btn.className = "cal-day";
+    btn.textContent = day;
+
+    if (AVAILABLE_DATES.includes(iso)) {
+      btn.classList.add("has-data");
+      btn.addEventListener("click", () => selectDate(iso));
+    }
+    if (iso === selectedDate) {
+      btn.classList.add("selected");
+    }
+    el.appendChild(btn);
+  }
+
+  // 前後の月にデータがあるかどうかで、矢印ボタンの有効/無効を切り替える
+  const prevBtn = document.getElementById("prevMonth");
+  const nextBtn = document.getElementById("nextMonth");
+  const hasEarlier = AVAILABLE_DATES.some((d) => d < `${calYear}-${String(calMonth + 1).padStart(2, "0")}-01`);
+  const hasLater = AVAILABLE_DATES.some((d) => d > `${calYear}-${String(calMonth + 1).padStart(2, "0")}-31`);
+  prevBtn.disabled = !hasEarlier;
+  nextBtn.disabled = !hasLater;
+}
+
+function changeMonth(diff) {
+  calMonth += diff;
+  if (calMonth < 0) { calMonth = 11; calYear -= 1; }
+  if (calMonth > 11) { calMonth = 0; calYear += 1; }
+  renderCalendarDays();
+}
+
+document.getElementById("prevMonth").addEventListener("click", () => changeMonth(-1));
+document.getElementById("nextMonth").addEventListener("click", () => changeMonth(1));
 
 fetch("results.json?_=" + Date.now())
   .then((res) => {
@@ -199,14 +322,25 @@ fetch("results.json?_=" + Date.now())
     return res.json();
   })
   .then((results) => {
-    // 日付の新しい順に並べる（JSONに追加された順の逆）
-    const dates = Object.keys(results).reverse();
-    if (dates.length === 0) {
+    RESULTS = results;
+    AVAILABLE_DATES = Object.keys(results).sort();
+    if (AVAILABLE_DATES.length === 0) {
       document.getElementById("status").textContent = "まだデータがありません。";
+      renderWeekdayHeader();
+      const today = new Date();
+      calYear = today.getFullYear();
+      calMonth = today.getMonth();
+      renderCalendarDays();
       return;
     }
-    renderTabs(dates, results);
-    renderDay(dates[0], results[dates[0]]);
+    const latest = AVAILABLE_DATES[AVAILABLE_DATES.length - 1];
+    const latestDate = new Date(latest + "T00:00:00+09:00");
+    calYear = latestDate.getFullYear();
+    calMonth = latestDate.getMonth();
+
+    renderWeekdayHeader();
+    renderCalendarDays();
+    selectDate(latest);
   })
   .catch((err) => {
     document.getElementById("status").textContent = "エラー: " + err.message;
