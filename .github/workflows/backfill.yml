@@ -1,0 +1,32 @@
+name: kabudragon-backfill
+
+on:
+  workflow_dispatch:  # 手動実行のみ（自動スケジュールなし）
+
+jobs:
+  run-backfill:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Pythonをセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 必要なライブラリをインストール
+        run: pip install -r requirements.txt
+
+      - name: 過去分をまとめて取得（数分〜十数分かかることがあります）
+        run: python 05_backfill.py
+
+      - name: 結果をリポジトリに保存
+        run: |
+          git config user.name "kabudragon-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/results.json
+          git diff --quiet --cached || git commit -m "backfill results.json"
+          git push
