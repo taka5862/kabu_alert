@@ -74,6 +74,42 @@ def fetch_codes(url: str) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
+def fetch_yahoo_ranking(url: str) -> pd.DataFrame:
+    """
+    Yahoo!ファイナンスのランキングページ（例：ストップ高、年初来高値更新）から
+    コード・名称を取り出す。診断用に、見つからない場合は列やサンプルもprintする。
+    """
+    res = requests.get(url, headers=HEADERS, timeout=20)
+    res.raise_for_status()
+    res.encoding = res.apparent_encoding
+
+    tables = pd.read_html(io.StringIO(res.text))
+    main_table = max(tables, key=len)
+    main_table.columns = [str(c) for c in main_table.columns]
+
+    # 銘柄名+コードがまとまって入っている列を探す（例："(株)UTグループ 2146東証P"）
+    code_col = None
+    for col in main_table.columns:
+        sample = main_table[col].astype(str)
+        hit_ratio = sample.str.contains(r"\d{4}[A-Z0-9]?東証").mean()
+        if hit_ratio > 0.5:
+            code_col = col
+            break
+
+    if code_col is None:
+        print(f"  [診断] {url} : コード列が見つかりませんでした。列一覧={list(main_table.columns)}")
+        print(f"  [診断] 先頭行の例: {main_table.iloc[0].to_dict() if len(main_table) else 'なし'}")
+        return pd.DataFrame(columns=["code", "name"])
+
+    raw = main_table[code_col].astype(str)
+    codes = raw.str.extract(r"(\d{4}[A-Z0-9]?)")[0]
+    names = raw.str.replace(r"\s*\d{4}[A-Z0-9]?東証.*$", "", regex=True).str.strip()
+
+    df = pd.DataFrame({"code": codes, "name": names})
+    df = df.dropna(subset=["code"]).reset_index(drop=True)
+    return df
+
+
 def filter_true_stopdaka(df: pd.DataFrame) -> pd.DataFrame:
     """
     df（close, change_amt列を含む）から、東証の制限値幅テーブルで計算した
