@@ -3,43 +3,52 @@
     "A": [
       {
         "code": "5942",
-        "name": "日本フイルコン"
+        "name": "日本フイルコン",
+        "cap": null
       },
       {
         "code": "3436",
-        "name": "SUMCO"
+        "name": "SUMCO",
+        "cap": null
       },
       {
         "code": "7041",
-        "name": "CRGホールディングス"
+        "name": "CRGホールディングス",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "9425",
-        "name": "ReYuu Japan"
+        "name": "ReYuu Japan",
+        "cap": null
       },
       {
         "code": "5942",
-        "name": "日本フイルコン"
+        "name": "日本フイルコン",
+        "cap": null
       },
       {
         "code": "7041",
-        "name": "CRGホールディングス"
+        "name": "CRGホールディングス",
+        "cap": null
       },
       {
         "code": "5967",
-        "name": "TONE"
+        "name": "TONE",
+        "cap": null
       },
       {
         "code": "3436",
-        "name": "SUMCO"
+        "name": "SUMCO",
+        "cap": null
       }
     ],
     "C": [
       {
         "code": "265A",
-        "name": "Hmcomm"
+        "name": "Hmcomm",
+        "cap": null
       }
     ],
     "D": [],
@@ -49,21 +58,25 @@
     "A": [
       {
         "code": "6522",
-        "name": "アスタリスク"
+        "name": "アスタリスク",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "7063",
-        "name": "Birdman"
+        "name": "Birdman",
+        "cap": null
       },
       {
         "code": "7602",
-        "name": "レダックス"
+        "name": "レダックス",
+        "cap": null
       },
       {
         "code": "7376",
-        "name": "BCC"
+        "name": "BCC",
+        "cap": null
       }
     ],
     "C": [],
@@ -75,11 +88,13 @@
     "B": [
       {
         "code": "4575",
-        "name": "キャンバス"
+        "name": "キャンバス",
+        "cap": null
       },
       {
         "code": "2492",
-        "name": "インフォマート"
+        "name": "インフォマート",
+        "cap": null
       }
     ],
     "C": [],
@@ -90,30 +105,35 @@
     "A": [
       {
         "code": "4424",
-        "name": "Amazia"
+        "name": "Amazia",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "264A",
-        "name": "Schoo"
+        "name": "Schoo",
+        "cap": null
       }
     ],
     "C": [
       {
         "code": "264A",
-        "name": "Schoo"
+        "name": "Schoo",
+        "cap": null
       },
       {
         "code": "9170",
-        "name": "成友興業"
+        "name": "成友興業",
+        "cap": null
       }
     ],
     "D": [],
     "E": [
       {
         "code": "4596",
-        "name": "窪田製薬ホールディングス"
+        "name": "窪田製薬ホールディングス",
+        "cap": null
       }
     ]
   },
@@ -122,15 +142,18 @@
     "B": [
       {
         "code": "4591",
-        "name": "リボミック"
+        "name": "リボミック",
+        "cap": null
       },
       {
         "code": "3625",
-        "name": "テックファームホールディングス"
+        "name": "テックファームホールディングス",
+        "cap": null
       },
       {
         "code": "4199",
-        "name": "ワンダープラネット"
+        "name": "ワンダープラネット",
+        "cap": null
       }
     ],
     "C": [],
@@ -142,17 +165,20 @@
     "B": [
       {
         "code": "9170",
-        "name": "成友興業"
+        "name": "成友興業",
+        "cap": null
       },
       {
         "code": "7815",
-        "name": "東京ボード工業"
+        "name": "東京ボード工業",
+        "cap": null
       }
     ],
     "C": [
       {
         "code": "9170",
-        "name": "成友興業"
+        "name": "成友興業",
+        "cap": null
       }
     ],
     "D": [],
@@ -162,17 +188,20 @@
     "A": [
       {
         "code": "7314",
-        "name": "小田原機器"
+        "name": "小田原機器",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "7314",
-        "name": "小田原機器"
+        "name": "小田原機器",
+        "cap": null
       },
       {
         "code": "2997",
-        "name": "ストレージ王"
+        "name": "ストレージ王",
+        "cap": null
       }
     ],
     "C": [],
@@ -183,30 +212,35 @@
     "A": [
       {
         "code": "4424",
-        "name": "Amazia"
+        "name": "Amazia",
+        "cap": null
       },
       {
         "code": "5018",
-        "name": "MORESCO"
+        "name": "MORESCO",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "5240",
-        "name": "monoAI technology"
+        "name": "monoAI technology",
+        "cap": null
       }
     ],
     "C": [
       {
         "code": "472A",
-        "name": "ミラティブ"
+        "name": "ミラティブ",
+        "cap": null
       }
     ],
     "D": [],
     "E": [
       {
         "code": "4381",
-        "name": "ビープラッツ"
+        "name": "ビープラッツ",
+        "cap": null
       }
     ]
   },
@@ -215,32 +249,38 @@
     "B": [
       {
         "code": "5240",
-        "name": "monoAI technology"
+        "name": "monoAI technology",
+        "cap": null
       },
       {
         "code": "195A",
-        "name": "MUSCAT GROUP"
+        "name": "MUSCAT GROUP",
+        "cap": null
       },
       {
         "code": "6227",
-        "name": "AIメカテック"
+        "name": "AIメカテック",
+        "cap": null
       }
     ],
     "C": [
       {
         "code": "195A",
-        "name": "MUSCAT GROUP"
+        "name": "MUSCAT GROUP",
+        "cap": null
       }
     ],
     "D": [],
     "E": [
       {
         "code": "5240",
-        "name": "monoAI technology"
+        "name": "monoAI technology",
+        "cap": null
       },
       {
         "code": "6227",
-        "name": "AIメカテック"
+        "name": "AIメカテック",
+        "cap": null
       }
     ]
   },
@@ -248,25 +288,30 @@
     "A": [
       {
         "code": "4381",
-        "name": "ビープラッツ"
+        "name": "ビープラッツ",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "6836",
-        "name": "ぷらっとホーム"
+        "name": "ぷらっとホーム",
+        "cap": null
       },
       {
         "code": "3996",
-        "name": "サインポスト"
+        "name": "サインポスト",
+        "cap": null
       },
       {
         "code": "4174",
-        "name": "アピリッツ"
+        "name": "アピリッツ",
+        "cap": null
       },
       {
         "code": "4418",
-        "name": "JDSC"
+        "name": "JDSC",
+        "cap": null
       }
     ],
     "C": [],
@@ -277,21 +322,25 @@
     "A": [
       {
         "code": "9326",
-        "name": "関通"
+        "name": "関通",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "7031",
-        "name": "インバウンドテック"
+        "name": "インバウンドテック",
+        "cap": null
       },
       {
         "code": "1407",
-        "name": "ウエストホールディングス"
+        "name": "ウエストホールディングス",
+        "cap": null
       },
       {
         "code": "9326",
-        "name": "関通"
+        "name": "関通",
+        "cap": null
       }
     ],
     "C": [],
@@ -302,43 +351,52 @@
     "A": [
       {
         "code": "150A",
-        "name": "JSH"
+        "name": "JSH",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "9388",
-        "name": "パパネッツ"
+        "name": "パパネッツ",
+        "cap": null
       },
       {
         "code": "157A",
-        "name": "グリーンモンスター"
+        "name": "グリーンモンスター",
+        "cap": null
       },
       {
         "code": "9238",
-        "name": "バリュークリエーション"
+        "name": "バリュークリエーション",
+        "cap": null
       },
       {
         "code": "150A",
-        "name": "JSH"
+        "name": "JSH",
+        "cap": null
       }
     ],
     "C": [
       {
         "code": "9388",
-        "name": "パパネッツ"
+        "name": "パパネッツ",
+        "cap": null
       },
       {
         "code": "157A",
-        "name": "グリーンモンスター"
+        "name": "グリーンモンスター",
+        "cap": null
       },
       {
         "code": "150A",
-        "name": "JSH"
+        "name": "JSH",
+        "cap": null
       },
       {
         "code": "9238",
-        "name": "バリュークリエーション"
+        "name": "バリュークリエーション",
+        "cap": null
       }
     ],
     "D": [],
@@ -348,26 +406,30 @@
     "A": [
       {
         "code": "150A",
-        "name": "JSH"
+        "name": "JSH",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "150A",
-        "name": "JSH"
+        "name": "JSH",
+        "cap": null
       }
     ],
     "C": [
       {
         "code": "150A",
-        "name": "JSH"
+        "name": "JSH",
+        "cap": null
       }
     ],
     "D": [],
     "E": [
       {
         "code": "150A",
-        "name": "JSH"
+        "name": "JSH",
+        "cap": null
       }
     ]
   },
@@ -375,35 +437,42 @@
     "A": [
       {
         "code": "2354",
-        "name": "YE DIGITAL"
+        "name": "YE DIGITAL",
+        "cap": null
       },
       {
         "code": "5575",
-        "name": "Globee"
+        "name": "Globee",
+        "cap": null
       },
       {
         "code": "296A",
-        "name": "令和アカウンティング・ホールディングス"
+        "name": "令和アカウンティング・ホールディングス",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "296A",
-        "name": "令和アカウンティング・ホールディングス"
+        "name": "令和アカウンティング・ホールディングス",
+        "cap": null
       },
       {
         "code": "9238",
-        "name": "バリュークリエーション"
+        "name": "バリュークリエーション",
+        "cap": null
       }
     ],
     "C": [
       {
         "code": "296A",
-        "name": "令和アカウンティング・ホールディングス"
+        "name": "令和アカウンティング・ホールディングス",
+        "cap": null
       },
       {
         "code": "9238",
-        "name": "バリュークリエーション"
+        "name": "バリュークリエーション",
+        "cap": null
       }
     ],
     "D": [],
@@ -414,19 +483,23 @@
     "B": [
       {
         "code": "4052",
-        "name": "フィーチャ"
+        "name": "フィーチャ",
+        "cap": null
       },
       {
         "code": "3803",
-        "name": "イメージ情報開発"
+        "name": "イメージ情報開発",
+        "cap": null
       },
       {
         "code": "4424",
-        "name": "Amazia"
+        "name": "Amazia",
+        "cap": null
       },
       {
         "code": "4073",
-        "name": "ジィ・シィ企画"
+        "name": "ジィ・シィ企画",
+        "cap": null
       }
     ],
     "C": [],
@@ -434,7 +507,8 @@
     "E": [
       {
         "code": "3907",
-        "name": "シリコンスタジオ"
+        "name": "シリコンスタジオ",
+        "cap": null
       }
     ]
   },
@@ -442,25 +516,30 @@
     "A": [
       {
         "code": "1518",
-        "name": "三井松島ホールディングス"
+        "name": "三井松島ホールディングス",
+        "cap": null
       },
       {
         "code": "5242",
-        "name": "アイズ"
+        "name": "アイズ",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "2459",
-        "name": "アウンコンサルティング"
+        "name": "アウンコンサルティング",
+        "cap": null
       },
       {
         "code": "5242",
-        "name": "アイズ"
+        "name": "アイズ",
+        "cap": null
       },
       {
         "code": "3907",
-        "name": "シリコンスタジオ"
+        "name": "シリコンスタジオ",
+        "cap": null
       }
     ],
     "C": [],
@@ -468,7 +547,8 @@
     "E": [
       {
         "code": "3907",
-        "name": "シリコンスタジオ"
+        "name": "シリコンスタジオ",
+        "cap": null
       }
     ]
   },
@@ -477,7 +557,8 @@
     "B": [
       {
         "code": "5240",
-        "name": "monoAI technology"
+        "name": "monoAI technology",
+        "cap": null
       }
     ],
     "C": [],
@@ -488,21 +569,25 @@
     "A": [
       {
         "code": "5242",
-        "name": "アイズ"
+        "name": "アイズ",
+        "cap": null
       },
       {
         "code": "4052",
-        "name": "フィーチャ"
+        "name": "フィーチャ",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "8995",
-        "name": "誠建設工業"
+        "name": "誠建設工業",
+        "cap": null
       },
       {
         "code": "4052",
-        "name": "フィーチャ"
+        "name": "フィーチャ",
+        "cap": null
       }
     ],
     "C": [],
@@ -510,7 +595,8 @@
     "E": [
       {
         "code": "3260",
-        "name": "エスポア"
+        "name": "エスポア",
+        "cap": null
       }
     ]
   },
@@ -518,13 +604,15 @@
     "A": [
       {
         "code": "2767",
-        "name": "円谷フィールズホールディングス"
+        "name": "円谷フィールズホールディングス",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "7063",
-        "name": "Birdman"
+        "name": "Birdman",
+        "cap": null
       }
     ],
     "C": [],
@@ -532,7 +620,8 @@
     "E": [
       {
         "code": "8995",
-        "name": "誠建設工業"
+        "name": "誠建設工業",
+        "cap": null
       }
     ]
   },
@@ -540,21 +629,25 @@
     "A": [
       {
         "code": "2767",
-        "name": "円谷フィールズホールディングス"
+        "name": "円谷フィールズホールディングス",
+        "cap": null
       },
       {
         "code": "9697",
-        "name": "カプコン"
+        "name": "カプコン",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "2767",
-        "name": "円谷フィールズホールディングス"
+        "name": "円谷フィールズホールディングス",
+        "cap": null
       },
       {
         "code": "9697",
-        "name": "カプコン"
+        "name": "カプコン",
+        "cap": null
       }
     ],
     "C": [],
@@ -562,7 +655,8 @@
     "E": [
       {
         "code": "2767",
-        "name": "円谷フィールズホールディングス"
+        "name": "円谷フィールズホールディングス",
+        "cap": null
       }
     ]
   },
@@ -570,17 +664,20 @@
     "A": [
       {
         "code": "7740",
-        "name": "タムロン"
+        "name": "タムロン",
+        "cap": null
       },
       {
         "code": "6364",
-        "name": "AIRMAN"
+        "name": "AIRMAN",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "6364",
-        "name": "AIRMAN"
+        "name": "AIRMAN",
+        "cap": null
       }
     ],
     "C": [],
@@ -591,29 +688,34 @@
     "A": [
       {
         "code": "4220",
-        "name": "リケンテクノス"
+        "name": "リケンテクノス",
+        "cap": null
       },
       {
         "code": "2737",
-        "name": "トーメンデバイス"
+        "name": "トーメンデバイス",
+        "cap": null
       }
     ],
     "B": [],
     "C": [
       {
         "code": "285A",
-        "name": "キオクシアホールディングス"
+        "name": "キオクシアホールディングス",
+        "cap": null
       },
       {
         "code": "6525",
-        "name": "KOKUSAI ELECTRIC"
+        "name": "KOKUSAI ELECTRIC",
+        "cap": null
       }
     ],
     "D": [],
     "E": [
       {
         "code": "2737",
-        "name": "トーメンデバイス"
+        "name": "トーメンデバイス",
+        "cap": null
       }
     ]
   },
@@ -621,41 +723,50 @@
     "A": [
       {
         "code": "2737",
-        "name": "トーメンデバイス"
+        "name": "トーメンデバイス",
+        "cap": null
       },
       {
         "code": "9110",
-        "name": "NSユナイテッド海運"
+        "name": "NSユナイテッド海運",
+        "cap": null
       },
       {
         "code": "6952",
-        "name": "カシオ計算機"
+        "name": "カシオ計算機",
+        "cap": null
       },
       {
         "code": "4052",
-        "name": "フィーチャ"
+        "name": "フィーチャ",
+        "cap": null
       },
       {
         "code": "6810",
-        "name": "マクセル"
+        "name": "マクセル",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "4073",
-        "name": "ジィ・シィ企画"
+        "name": "ジィ・シィ企画",
+        "cap": null
       },
       {
         "code": "6810",
-        "name": "マクセル"
+        "name": "マクセル",
+        "cap": null
       },
       {
         "code": "6952",
-        "name": "カシオ計算機"
+        "name": "カシオ計算機",
+        "cap": null
       },
       {
         "code": "4381",
-        "name": "ビープラッツ"
+        "name": "ビープラッツ",
+        "cap": null
       }
     ],
     "C": [],
@@ -663,11 +774,13 @@
     "E": [
       {
         "code": "4052",
-        "name": "フィーチャ"
+        "name": "フィーチャ",
+        "cap": null
       },
       {
         "code": "2737",
-        "name": "トーメンデバイス"
+        "name": "トーメンデバイス",
+        "cap": null
       }
     ]
   },
@@ -675,41 +788,50 @@
     "A": [
       {
         "code": "3276",
-        "name": "JPMC"
+        "name": "JPMC",
+        "cap": null
       },
       {
         "code": "2737",
-        "name": "トーメンデバイス"
+        "name": "トーメンデバイス",
+        "cap": null
       },
       {
         "code": "7480",
-        "name": "スズデン"
+        "name": "スズデン",
+        "cap": null
       },
       {
         "code": "4073",
-        "name": "ジィ・シィ企画"
+        "name": "ジィ・シィ企画",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "9444",
-        "name": "トーシンホールディングス"
+        "name": "トーシンホールディングス",
+        "cap": null
       },
       {
         "code": "4073",
-        "name": "ジィ・シィ企画"
+        "name": "ジィ・シィ企画",
+        "cap": null
       },
       {
         "code": "6440",
-        "name": "JUKI"
+        "name": "JUKI",
+        "cap": null
       },
       {
         "code": "4381",
-        "name": "ビープラッツ"
+        "name": "ビープラッツ",
+        "cap": null
       },
       {
         "code": "2737",
-        "name": "トーメンデバイス"
+        "name": "トーメンデバイス",
+        "cap": null
       }
     ],
     "C": [],
@@ -717,15 +839,18 @@
     "E": [
       {
         "code": "4381",
-        "name": "ビープラッツ"
+        "name": "ビープラッツ",
+        "cap": null
       },
       {
         "code": "2737",
-        "name": "トーメンデバイス"
+        "name": "トーメンデバイス",
+        "cap": null
       },
       {
         "code": "4073",
-        "name": "ジィ・シィ企画"
+        "name": "ジィ・シィ企画",
+        "cap": null
       }
     ]
   },
@@ -733,21 +858,25 @@
     "A": [
       {
         "code": "4746",
-        "name": "東計電算"
+        "name": "東計電算",
+        "cap": null
       },
       {
         "code": "4073",
-        "name": "ジィ・シィ企画"
+        "name": "ジィ・シィ企画",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "4635",
-        "name": "東京インキ"
+        "name": "東京インキ",
+        "cap": null
       },
       {
         "code": "4968",
-        "name": "荒川化学工業"
+        "name": "荒川化学工業",
+        "cap": null
       }
     ],
     "C": [],
@@ -755,7 +884,8 @@
     "E": [
       {
         "code": "4073",
-        "name": "ジィ・シィ企画"
+        "name": "ジィ・シィ企画",
+        "cap": null
       }
     ]
   },
@@ -763,17 +893,20 @@
     "A": [
       {
         "code": "4052",
-        "name": "フィーチャ"
+        "name": "フィーチャ",
+        "cap": null
       },
       {
         "code": "6998",
-        "name": "日本タングステン"
+        "name": "日本タングステン",
+        "cap": null
       }
     ],
     "B": [
       {
         "code": "4234",
-        "name": "サンエー化研"
+        "name": "サンエー化研",
+        "cap": null
       }
     ],
     "C": [],
@@ -831,6 +964,318 @@
       {
         "code": "6998",
         "name": "日本タングステン",
+        "cap": null
+      }
+    ]
+  },
+  "2026-08-10": {
+    "A": [
+      {
+        "code": "6098",
+        "name": "リクルートホールディングス",
+        "cap": null
+      },
+      {
+        "code": "6570",
+        "name": "共和コーポレーション",
+        "cap": null
+      },
+      {
+        "code": "4052",
+        "name": "フィーチャ",
+        "cap": null
+      },
+      {
+        "code": "3422",
+        "name": "J-MAX",
+        "cap": null
+      },
+      {
+        "code": "4937",
+        "name": "Waqoo",
+        "cap": null
+      },
+      {
+        "code": "3374",
+        "name": "内外テック",
+        "cap": null
+      },
+      {
+        "code": "6138",
+        "name": "ダイジェット工業",
+        "cap": null
+      },
+      {
+        "code": "6743",
+        "name": "大同信号",
+        "cap": null
+      },
+      {
+        "code": "3676",
+        "name": "デジタルハーツホールディングス",
+        "cap": null
+      },
+      {
+        "code": "6258",
+        "name": "平田機工",
+        "cap": null
+      },
+      {
+        "code": "7567",
+        "name": "栄電子",
+        "cap": null
+      },
+      {
+        "code": "4631",
+        "name": "DIC",
+        "cap": null
+      }
+    ],
+    "B": [
+      {
+        "code": "6570",
+        "name": "共和コーポレーション",
+        "cap": null
+      },
+      {
+        "code": "4937",
+        "name": "Waqoo",
+        "cap": null
+      },
+      {
+        "code": "3422",
+        "name": "J-MAX",
+        "cap": null
+      },
+      {
+        "code": "6928",
+        "name": "エノモト",
+        "cap": null
+      },
+      {
+        "code": "3277",
+        "name": "サンセイランディック",
+        "cap": null
+      }
+    ],
+    "C": [],
+    "D": [],
+    "E": [
+      {
+        "code": "3676",
+        "name": "デジタルハーツホールディングス",
+        "cap": null
+      },
+      {
+        "code": "3422",
+        "name": "J-MAX",
+        "cap": null
+      }
+    ]
+  },
+  "2026-08-12": {
+    "A": [
+      {
+        "code": "6138",
+        "name": "ダイジェット工業",
+        "cap": null
+      },
+      {
+        "code": "3173",
+        "name": "Cominix",
+        "cap": null
+      },
+      {
+        "code": "3131",
+        "name": "シンデン・ハイテックス",
+        "cap": null
+      },
+      {
+        "code": "4052",
+        "name": "フィーチャ",
+        "cap": null
+      },
+      {
+        "code": "7957",
+        "name": "フジコピアン",
+        "cap": null
+      }
+    ],
+    "B": [
+      {
+        "code": "6138",
+        "name": "ダイジェット工業",
+        "cap": null
+      }
+    ],
+    "C": [],
+    "D": [],
+    "E": [
+      {
+        "code": "6138",
+        "name": "ダイジェット工業",
+        "cap": null
+      },
+      {
+        "code": "4052",
+        "name": "フィーチャ",
+        "cap": null
+      }
+    ]
+  },
+  "2026-08-13": {
+    "A": [
+      {
+        "code": "4255",
+        "name": "THECOO",
+        "cap": null
+      },
+      {
+        "code": "6340",
+        "name": "澁谷工業",
+        "cap": null
+      },
+      {
+        "code": "3895",
+        "name": "ハビックス",
+        "cap": null
+      }
+    ],
+    "B": [
+      {
+        "code": "3895",
+        "name": "ハビックス",
+        "cap": null
+      },
+      {
+        "code": "7694",
+        "name": "いつも",
+        "cap": null
+      },
+      {
+        "code": "6340",
+        "name": "澁谷工業",
+        "cap": null
+      },
+      {
+        "code": "194A",
+        "name": "WOLVES HAND",
+        "cap": null
+      },
+      {
+        "code": "6027",
+        "name": "弁護士ドットコム",
+        "cap": null
+      }
+    ],
+    "C": [
+      {
+        "code": "194A",
+        "name": "WOLVES HAND",
+        "cap": null
+      },
+      {
+        "code": "146A",
+        "name": "コロンビア・ワークス",
+        "cap": null
+      }
+    ],
+    "D": [],
+    "E": [
+      {
+        "code": "6862",
+        "name": "ミナトホールディングス",
+        "cap": null
+      }
+    ]
+  },
+  "2026-08-14": {
+    "A": [
+      {
+        "code": "6513",
+        "name": "オリジン",
+        "cap": null
+      },
+      {
+        "code": "3895",
+        "name": "ハビックス",
+        "cap": null
+      },
+      {
+        "code": "6904",
+        "name": "原田工業",
+        "cap": null
+      },
+      {
+        "code": "3660",
+        "name": "アイスタイル",
+        "cap": null
+      },
+      {
+        "code": "4478",
+        "name": "フリー",
+        "cap": null
+      },
+      {
+        "code": "4480",
+        "name": "メドレー",
+        "cap": null
+      }
+    ],
+    "B": [
+      {
+        "code": "6513",
+        "name": "オリジン",
+        "cap": null
+      },
+      {
+        "code": "7815",
+        "name": "東京ボード工業",
+        "cap": null
+      },
+      {
+        "code": "6904",
+        "name": "原田工業",
+        "cap": null
+      },
+      {
+        "code": "479A",
+        "name": "PRONI",
+        "cap": null
+      },
+      {
+        "code": "4480",
+        "name": "メドレー",
+        "cap": null
+      },
+      {
+        "code": "2585",
+        "name": "ライフドリンクカンパニー",
+        "cap": null
+      },
+      {
+        "code": "3633",
+        "name": "GMOペパボ",
+        "cap": null
+      }
+    ],
+    "C": [
+      {
+        "code": "479A",
+        "name": "PRONI",
+        "cap": null
+      },
+      {
+        "code": "150A",
+        "name": "JSH",
+        "cap": null
+      }
+    ],
+    "D": [],
+    "E": [
+      {
+        "code": "3895",
+        "name": "ハビックス",
         "cap": null
       }
     ]
