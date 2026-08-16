@@ -34,7 +34,7 @@
     margin: 0 0 8px;
   }
   main {
-    padding: 8px 16px 40px;
+    padding: 8px 8px 40px;
     max-width: 720px;
     margin: 0 auto;
   }
@@ -42,7 +42,7 @@
   /* ---- 2カラムレイアウト ---- */
   .columns {
     display: flex;
-    gap: 10px;
+    gap: 6px;
     align-items: flex-start;
   }
   .col {
@@ -50,10 +50,10 @@
     min-width: 0;
   }
   .col-left {
-    flex: 0 0 42%;
+    flex: 0 0 50%;
   }
   .col-right {
-    flex: 1;
+    flex: 0 0 calc(50% - 6px);
   }
 
   /* ---- カレンダー ---- */
@@ -135,7 +135,7 @@
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 10px 12px;
+    padding: 8px 8px;
     margin-bottom: 8px;
   }
   .section h2 {
