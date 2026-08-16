@@ -21,6 +21,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: 過去分をまとめて取得（数分〜十数分かかることがあります）
+        env:
+          JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
         run: python 05_backfill.py
 
       - name: 結果をリポジトリに保存
