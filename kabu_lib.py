@@ -214,9 +214,11 @@ def _fetch_shares_jquants(code: str) -> int:
             print(f"    [J-Quants] {code}: 財務データが見つかりませんでした")
             return None
         # 一番新しい開示のレコードを使う
-        latest = sorted(data, key=lambda d: str(d.get("DisclosedDate", "")), reverse=True)[0]
-        for key, value in latest.items():
-            if "Share" in key and value not in (None, "", "0"):
+        latest = sorted(data, key=lambda d: str(d.get("DiscDate", "")), reverse=True)[0]
+        # ShOutFY = 期末発行済株式数（自己株式込み）。無ければ期中平均株式数で代用
+        for key in ("ShOutFY", "AvgSh"):
+            value = latest.get(key)
+            if value not in (None, "", "0"):
                 try:
                     return int(float(value))
                 except (TypeError, ValueError):
