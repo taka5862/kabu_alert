@@ -1,0 +1,35 @@
+name: kabudragon-early-alert
+
+on:
+  schedule:
+    # UTC時刻で指定（JST = UTC+9）。17:00 JST = 08:00 UTC。平日のみ（月〜金）
+    - cron: "0 8 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  run-early-alert:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Pythonをセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 必要なライブラリをインストール
+        run: pip install -r requirements.txt
+
+      - name: 速報スクリプトを実行（Yahoo!ファイナンスベース）
+        run: python 07_alert_early.py
+
+      - name: 結果をリポジトリに保存
+        run: |
+          git config user.name "kabudragon-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/results.json
+          git diff --quiet --cached || git commit -m "early update (A) results.json"
+          git push
