@@ -5,11 +5,12 @@
 株ドラゴンのランキングページを取得し、以下5つの組み合わせに該当する銘柄を
 docs/results.json に書き出します（Webページ表示用）。
 
-  A) 年初来高値 × ストップ高
-  B) 出来高急増 × ストップ高
-  C) IPO銘柄 × ストップ高
-  D) 出来高急増 × 上ひげ陽線（上ひげの長さが始値の10%以上のもののみ）
-  E) 2営業日連続ストップ高
+  A) ストップ高
+  B) 2営業日連続ストップ高
+  C) 年初来高値 × ストップ高
+  D) 出来高急増 × ストップ高
+  E) IPO銘柄 × ストップ高
+  F) 出来高急増 × 上ひげ陽線（上ひげの長さが始値の10%以上のもののみ）
 
 前提：
 - 株ドラゴンは毎日21時頃に更新されるので、このスクリプトも21時以降に
@@ -103,32 +104,45 @@ def main():
         trade_date = date.today().isoformat()
     data_date = date.fromisoformat(trade_date)
 
-    # ---- A) 年初来高値 × ストップ高 ----
-    matched_a = pd.merge(
+    # ---- A) ストップ高（単体）----
+    stopdaka_plain = enrich_with_market_cap(
+        stopdaka_full[["code", "name", "trade_date", "close"]].copy(), shares_session_cache
+    )
+    print(f"  [A] ストップ高: {len(stopdaka_plain)} 銘柄")
+
+    # ---- B) 2営業日連続ストップ高 ----
+    prev_stopdaka_full = find_previous_trading_day_stopdaka(data_date)
+    prev_codes = set(prev_stopdaka_full["code"]) if not prev_stopdaka_full.empty else set()
+    matched_b = stopdaka_full[stopdaka_full["code"].isin(prev_codes)]
+    matched_b = enrich_with_market_cap(matched_b, shares_session_cache)
+    print(f"  [B] 2営業日連続ストップ高: {len(matched_b)} 銘柄")
+
+    # ---- C) 年初来高値 × ストップ高 ----
+    matched_c = pd.merge(
         takane[["code", "name"]],
         stopdaka_full[["code", "name", "trade_date", "close"]],
         on="code",
         suffixes=("", "_y"),
     )
-    matched_a = enrich_with_market_cap(matched_a, shares_session_cache)
-    cap_filled = matched_a["cap_label"].notna().sum() if "cap_label" in matched_a.columns else 0
-    print(f"  [A] 年初来高値×ストップ高: {len(matched_a)} 銘柄（うち時価総額が埋まった数: {cap_filled}）")
+    matched_c = enrich_with_market_cap(matched_c, shares_session_cache)
+    cap_filled = matched_c["cap_label"].notna().sum() if "cap_label" in matched_c.columns else 0
+    print(f"  [C] 年初来高値×ストップ高: {len(matched_c)} 銘柄（うち時価総額が埋まった数: {cap_filled}）")
 
-    # ---- B) 出来高急増 × ストップ高 ----
+    # ---- D) 出来高急増 × ストップ高 ----
     dekizou = fetch_codes(DEKIZOU_URL)
     dekizou_full = filter_true_stopdaka(dekizou)
     dekizou_full = enrich_with_market_cap(dekizou_full, shares_session_cache)
-    print(f"  [B] 出来高急増候補: {len(dekizou)} 銘柄 / うち本当のストップ高: {len(dekizou_full)} 銘柄")
+    print(f"  [D] 出来高急増候補: {len(dekizou)} 銘柄 / うち本当のストップ高: {len(dekizou_full)} 銘柄")
 
-    # ---- C) IPO銘柄 × ストップ高 ----
+    # ---- E) IPO銘柄 × ストップ高 ----
     ipo = fetch_codes(IPO_URL)
     ipo_full = filter_true_stopdaka(ipo)
     ipo_full = enrich_with_market_cap(ipo_full, shares_session_cache)
-    print(f"  [C] IPO銘柄候補: {len(ipo)} 銘柄 / うち本当のストップ高: {len(ipo_full)} 銘柄")
+    print(f"  [E] IPO銘柄候補: {len(ipo)} 銘柄 / うち本当のストップ高: {len(ipo_full)} 銘柄")
 
-    # ---- D) 出来高急増 × 上ひげ陽線（ヒゲの長さが10%以上のみ）----
+    # ---- F) 出来高急増 × 上ひげ陽線（ヒゲの長さが10%以上のみ）----
     dekizou_uwahige = fetch_codes(DEKIZOU_UWAHIGE_URL)
-    print(f"  [D] 出来高急増×上ひげ陽線候補: {len(dekizou_uwahige)} 銘柄（始値を個別に確認中...）")
+    print(f"  [F] 出来高急増×上ひげ陽線候補: {len(dekizou_uwahige)} 銘柄（始値を個別に確認中...）")
     long_wick_rows = []
     for _, row in dekizou_uwahige.iterrows():
         open_price = fetch_open_price(row["code"])
@@ -144,23 +158,17 @@ def main():
                 cap = format_market_cap(shares * row["close"]) if shares and pd.notna(row["close"]) else None
                 long_wick_rows.append({"code": code, "name": row["name"], "cap": cap})
         time.sleep(0.3)
-    print(f"  [D] うちヒゲ{int(UWAHIGE_MIN_RATIO*100)}%以上: {len(long_wick_rows)} 銘柄")
-
-    # ---- E) 2営業日連続ストップ高 ----
-    prev_stopdaka_full = find_previous_trading_day_stopdaka(data_date)
-    prev_codes = set(prev_stopdaka_full["code"]) if not prev_stopdaka_full.empty else set()
-    matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_codes)]
-    matched_e = enrich_with_market_cap(matched_e, shares_session_cache)
-    print(f"  [E] 2営業日連続ストップ高: {len(matched_e)} 銘柄")
+    print(f"  [F] うちヒゲ{int(UWAHIGE_MIN_RATIO*100)}%以上: {len(long_wick_rows)} 銘柄")
 
     # ---- 結果をJSONにまとめて保存 ----
     results = load_results()
     results[trade_date] = {
-        "A": to_records(matched_a),
-        "B": to_records(dekizou_full),
-        "C": to_records(ipo_full),
-        "D": long_wick_rows,
-        "E": to_records(matched_e),
+        "A": to_records(stopdaka_plain),
+        "B": to_records(matched_b),
+        "C": to_records(matched_c),
+        "D": to_records(dekizou_full),
+        "E": to_records(ipo_full),
+        "F": long_wick_rows,
     }
     save_results(results)
     print(f"{trade_date} の結果を {RESULTS_FILE} に保存しました。")
