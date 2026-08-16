@@ -4,12 +4,12 @@
 --------------------
 17時ごろ（市場が閉まった直後）に実行する、速報版のスクリプトです。
 株ドラゴンは21時頃まで更新されないため、Yahoo!ファイナンスのランキング
-ページ（ほぼリアルタイム更新）を使って「A：年初来高値×ストップ高」だけを
-先出しします。
+ページ（ほぼリアルタイム更新）を使って「A：ストップ高」「C：年初来高値×
+ストップ高」だけを先出しします。
 
-B〜E（出来高急増・IPO・上ひげ陽線・2連続ストップ高）は株ドラゴンの
+B・D・E・F（2連続ストップ高・出来高急増・IPO・上ひげ陽線）は株ドラゴンの
 データが必要なため、これまで通り21:15の本実行（03_alert_kabudragon.py）
-で埋まります。21:15になると、Aもより正確な株ドラゴンベースの判定結果で
+で埋まります。21:15になると、A・Cもより正確な株ドラゴンベースの判定結果で
 上書きされます。
 
 使い方：
@@ -49,18 +49,22 @@ def main():
     yearhigh = fetch_yahoo_ranking(YEARHIGH_URL)
     print(f"  ストップ高: {len(stophigh)} 銘柄 / 年初来高値更新: {len(yearhigh)} 銘柄")
 
+    stophigh_capped = enrich_with_market_cap(stophigh.copy())
     matched = pd.merge(stophigh, yearhigh, on="code", suffixes=("", "_y"))
     matched = enrich_with_market_cap(matched)
-    print(f"  [A・速報] 年初来高値×ストップ高: {len(matched)} 銘柄")
+    print(f"  [A・速報] ストップ高: {len(stophigh_capped)} 銘柄")
+    print(f"  [C・速報] 年初来高値×ストップ高: {len(matched)} 銘柄")
 
     trade_date = date.today().isoformat()
 
     results = load_results()
     day = results.get(trade_date, {})
-    # 21:15の本実行が既にAを埋めていれば、速報版で上書きしない
+    # 21:15の本実行が既に埋めていれば、速報版で上書きしない
     # （株ドラゴンベースの正確な判定を優先する）
     if not day.get("A"):
-        day["A"] = to_records(matched)
+        day["A"] = to_records(stophigh_capped)
+    if not day.get("C"):
+        day["C"] = to_records(matched)
     results[trade_date] = day
     save_results(results)
     print(f"{trade_date} の速報データを {RESULTS_FILE} に保存しました。")
