@@ -84,6 +84,8 @@ def save_results(data: dict):
 
 def main():
     print("株ドラゴンのデータを取得しています...")
+    from kabu_lib import JQUANTS_API_KEY
+    print(f"  [診断] JQUANTS_API_KEY 読み込み状態: {'あり（' + str(len(JQUANTS_API_KEY)) + '文字）' if JQUANTS_API_KEY else 'なし（未設定）'}")
     shares_session_cache = {}  # この実行の中だけで使い回す（保存はしない）
 
     # ---- ストップ高・年初来高値の基本データ ----
@@ -109,7 +111,8 @@ def main():
         suffixes=("", "_y"),
     )
     matched_a = enrich_with_market_cap(matched_a, shares_session_cache)
-    print(f"  [A] 年初来高値×ストップ高: {len(matched_a)} 銘柄")
+    cap_filled = matched_a["cap_label"].notna().sum() if "cap_label" in matched_a.columns else 0
+    print(f"  [A] 年初来高値×ストップ高: {len(matched_a)} 銘柄（うち時価総額が埋まった数: {cap_filled}）")
 
     # ---- B) 出来高急増 × ストップ高 ----
     dekizou = fetch_codes(DEKIZOU_URL)
