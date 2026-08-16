@@ -1194,81 +1194,81 @@
       {
         "code": "6513",
         "name": "オリジン",
-        "cap": null
+        "cap": "92億円"
       },
       {
         "code": "3895",
         "name": "ハビックス",
-        "cap": null
+        "cap": "47億円"
       },
       {
         "code": "6904",
         "name": "原田工業",
-        "cap": null
+        "cap": "117億円"
       },
       {
         "code": "3660",
         "name": "アイスタイル",
-        "cap": null
+        "cap": "531億円"
       },
       {
         "code": "4478",
         "name": "フリー",
-        "cap": null
+        "cap": "1,996億円"
       },
       {
         "code": "4480",
         "name": "メドレー",
-        "cap": null
+        "cap": "876億円"
       }
     ],
     "B": [
       {
         "code": "6513",
         "name": "オリジン",
-        "cap": null
+        "cap": "92億円"
       },
       {
         "code": "7815",
         "name": "東京ボード工業",
-        "cap": null
+        "cap": "14億円"
       },
       {
         "code": "6904",
         "name": "原田工業",
-        "cap": null
+        "cap": "117億円"
       },
       {
         "code": "479A",
         "name": "PRONI",
-        "cap": null
+        "cap": "77億円"
       },
       {
         "code": "4480",
         "name": "メドレー",
-        "cap": null
+        "cap": "876億円"
       },
       {
         "code": "2585",
         "name": "ライフドリンクカンパニー",
-        "cap": null
+        "cap": "935億円"
       },
       {
         "code": "3633",
         "name": "GMOペパボ",
-        "cap": null
+        "cap": "120億円"
       }
     ],
     "C": [
       {
         "code": "479A",
         "name": "PRONI",
-        "cap": null
+        "cap": "77億円"
       },
       {
         "code": "150A",
         "name": "JSH",
-        "cap": null
+        "cap": "35億円"
       }
     ],
     "D": [],
@@ -1276,7 +1276,7 @@
       {
         "code": "3895",
         "name": "ハビックス",
-        "cap": null
+        "cap": "47億円"
       }
     ]
   },
