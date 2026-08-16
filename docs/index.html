@@ -62,49 +62,49 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
   }
   .cal-nav button {
     border: none;
     background: none;
-    font-size: 15px;
+    font-size: 13px;
     color: var(--accent);
     padding: 0 6px;
     cursor: pointer;
-    line-height: 1.4;
+    line-height: 1.2;
   }
   .cal-nav button:disabled {
     color: var(--border);
     cursor: default;
   }
   .cal-month-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
-    min-width: 80px;
+    min-width: 70px;
     text-align: center;
   }
   .cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 1px;
-    margin: 0 auto 2px;
+    margin: 0 auto 1px;
     max-width: 240px;
   }
   .cal-weekday {
     text-align: center;
-    font-size: 9px;
+    font-size: 8px;
     color: var(--muted);
-    padding: 0 0 1px;
-    line-height: 1.2;
+    padding: 0;
+    line-height: 1.1;
   }
   .cal-day {
-    height: 24px;
+    height: 17px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
-    font-size: 11px;
+    border-radius: 4px;
+    font-size: 9px;
     line-height: 1;
     border: none;
     background: none;
@@ -234,7 +234,7 @@ function chartUrl(code) {
 
 function truncateName(name, maxLen = 7) {
   if (!name) return "";
-  return name.length > maxLen ? name.slice(0, maxLen) + "…" : name;
+  return name.slice(0, maxLen);
 }
 
 function formatDateLabel(isoDate) {
