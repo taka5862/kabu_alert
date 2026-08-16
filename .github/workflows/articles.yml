@@ -1,0 +1,35 @@
+name: kabutan-articles
+
+on:
+  schedule:
+    # UTC時刻で指定（JST = UTC+9）。22:00 JST = 13:00 UTC。土日も含めて毎日実行
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-articles:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # docs/articles.json をリポジトリに書き戻すために必要
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Pythonをセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 必要なライブラリをインストール
+        run: pip install -r requirements.txt
+
+      - name: 決算インパクト・話題株・S高安記事リンクを取得
+        run: python 09_kabutan_articles.py
+
+      - name: 結果をリポジトリに保存（Webページに反映）
+        run: |
+          git config user.name "kabudragon-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/articles.json
+          git diff --quiet --cached || git commit -m "update articles.json"
+          git push
