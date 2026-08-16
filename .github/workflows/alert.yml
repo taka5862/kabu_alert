@@ -29,16 +29,13 @@ jobs:
           JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
         run: python 03_alert_kabudragon.py
 
-      - name: 決算インパクト記事リンクを取得
-        run: python 06_kabutan_impact.py
-
-      - name: 話題株・ストップ高安記事リンクを取得
-        run: python 08_kabutan_topics.py
+      - name: 決算インパクト・話題株・S高安記事リンクを取得
+        run: python 09_kabutan_articles.py
 
       - name: 結果をリポジトリに保存（Webページに反映）
         run: |
           git config user.name "kabudragon-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add docs/results.json docs/impact.json docs/topics.json
-          git diff --quiet --cached || git commit -m "update results.json / impact.json / topics.json"
+          git add docs/results.json docs/articles.json
+          git diff --quiet --cached || git commit -m "update results.json / articles.json"
           git push
