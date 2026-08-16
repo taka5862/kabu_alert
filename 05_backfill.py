@@ -6,9 +6,9 @@
 毎日分をさかのぼって取得し、docs/results.json にまとめて追加します。
 
 【重要な制限】
-D（出来高急増×上ひげ陽線）は、始値をみんかぶの「当日ページ」から取得する
-仕組みのため、過去日付には対応していません。バックフィルでは A・B・C・E の
-4種類のみを埋めます（D は空欄になります）。
+F（出来高急増×上ひげ陽線）は、始値をみんかぶの「当日ページ」から取得する
+仕組みのため、過去日付には対応していません。バックフィルでは A・B・C・D・E の
+5種類のみを埋めます（F は空欄になります）。
 
 時価総額は「発行済株式数 × その日の終値」で計算します。発行済株式数は
 このバックフィル実行全体で使い回す一時的なキャッシュを使うため（ファイルには
@@ -107,31 +107,35 @@ def main():
         dekizou_full = filter_true_stopdaka(dekizou) if dekizou is not None else pd.DataFrame()
         ipo_full = filter_true_stopdaka(ipo) if ipo is not None else pd.DataFrame()
 
-        matched_a = pd.merge(
+        stopdaka_plain = stopdaka_full[["code", "name", "close"]].copy()
+
+        matched_c = pd.merge(
             takane[["code", "name"]] if takane is not None else pd.DataFrame(columns=["code", "name"]),
             stopdaka_full[["code", "name", "close"]],
             on="code",
             suffixes=("", "_y"),
         )
 
-        matched_e = stopdaka_full[stopdaka_full["code"].isin(prev_stopdaka_full_codes)]
+        matched_b = stopdaka_full[stopdaka_full["code"].isin(prev_stopdaka_full_codes)]
 
-        matched_a = enrich_with_market_cap(matched_a, shares_session_cache)
+        stopdaka_plain = enrich_with_market_cap(stopdaka_plain, shares_session_cache)
+        matched_b = enrich_with_market_cap(matched_b, shares_session_cache)
+        matched_c = enrich_with_market_cap(matched_c, shares_session_cache)
         dekizou_full = enrich_with_market_cap(dekizou_full, shares_session_cache)
         ipo_full = enrich_with_market_cap(ipo_full, shares_session_cache)
-        matched_e = enrich_with_market_cap(matched_e, shares_session_cache)
 
         trade_date = d.isoformat()  # 上のチェックで実際のデータ日付と一致していることを確認済み
         results[trade_date] = {
-            "A": to_records(matched_a),
-            "B": to_records(dekizou_full),
-            "C": to_records(ipo_full),
-            "D": [],  # 過去日付は始値データが無いため空欄
-            "E": to_records(matched_e),
+            "A": to_records(stopdaka_plain),
+            "B": to_records(matched_b),
+            "C": to_records(matched_c),
+            "D": to_records(dekizou_full),
+            "E": to_records(ipo_full),
+            "F": [],  # 過去日付は始値データが無いため空欄
         }
         print(
-            f"  {trade_date}: A={len(matched_a)} B={len(dekizou_full)} "
-            f"C={len(ipo_full)} E={len(matched_e)}"
+            f"  {trade_date}: A={len(stopdaka_plain)} B={len(matched_b)} "
+            f"C={len(matched_c)} D={len(dekizou_full)} E={len(ipo_full)}"
         )
 
         prev_stopdaka_full_codes = set(stopdaka_full["code"])
