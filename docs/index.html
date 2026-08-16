@@ -22,19 +22,42 @@
     color: var(--text);
   }
   header {
-    padding: 10px 16px 2px;
+    padding: 8px 10px 4px;
     background: var(--card-bg);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 10;
   }
+  .page-nav {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .page-nav a {
+    flex: 1;
+    text-align: center;
+    padding: 6px 0;
+    border-radius: 8px;
+    font-size: 12px;
+    text-decoration: none;
+    background: var(--bg);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .page-nav a.active {
+    background: var(--text);
+    color: #fff;
+    border-color: var(--text);
+    font-weight: bold;
+  }
   header h1 {
-    font-size: 16px;
-    margin: 0 0 8px;
+    font-size: 13px;
+    margin: 0 0 6px;
+    color: var(--muted);
   }
   main {
-    padding: 8px 8px 40px;
+    padding: 6px 8px 40px;
     max-width: 720px;
     margin: 0 auto;
   }
@@ -194,11 +217,11 @@
 <body>
 
 <header>
-  <h1>📈 株ドラゴン アラート結果</h1>
-  <div style="font-size:12px; margin-bottom:6px;">
-    <a href="impact.html" style="color:#d81b60; margin-right:12px;">決算インパクト記事 →</a>
-    <a href="topics.html" style="color:#d81b60;">話題株・S高安まとめ →</a>
+  <div class="page-nav">
+    <a href="index.html" class="active">📈 株価</a>
+    <a href="articles.html">📰 記事</a>
   </div>
+  <h1>📈 株ドラゴン アラート結果</h1>
 </header>
 
 <main>
