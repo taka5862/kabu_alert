@@ -2,14 +2,17 @@
 """
 09_kabutan_articles.py
 ------------------------
-株探（s.kabutan.jp）の「特集」カテゴリのニュース一覧から、以下4種類の
-記事を抜き出し、docs/articles.json に蓄積します（Webページ表示用）。
+株探（s.kabutan.jp）のニュース一覧から、以下4種類の記事を抜き出し、
+docs/articles.json に蓄積します（Webページ表示用）。
 
   - 決算インパクト（プラス／マイナス）
   - 話題株ダイジェスト
-  - ストップ高（本日の【ストップ高／ストップ安】引け、の記事）
-  - ストップ安（同上。1つの記事で両方を扱っているため、ストップ高と
-    同じ記事がここにも入ります）
+  - ストップ高安（本日の【ストップ高／ストップ安】引け、の記事）
+
+「話題株ダイジェスト」は「特集」カテゴリとは別カテゴリに分類されている
+ことがあるため、複数のカテゴリページ＋カテゴリなしの全体一覧の両方を
+チェックして、取りこぼしを防いでいます（URLで重複除去するので、同じ
+記事が複数ページに出てきても二重登録にはなりません）。
 
 記事のURL（例："n202608100927"）に日付が埋め込まれているので、そこから
 日付を割り出してカレンダー表示に使えるようにしています。
@@ -26,7 +29,13 @@ import os
 import json
 import requests
 
-CATEGORY_URL = "https://s.kabutan.jp/market_news/?category_org_id=5"  # 特集カテゴリ
+# 複数のページをチェックして取りこぼしを防ぐ
+# category_org_id: 5=特集, 4=注目株（ページによって分類が違うことがあるため両方見る）
+SOURCE_URLS = [
+    "https://s.kabutan.jp/market_news/",                     # カテゴリなし（全体）
+    "https://s.kabutan.jp/market_news/?category_org_id=5",   # 特集
+    "https://s.kabutan.jp/market_news/?category_org_id=4",   # 注目株
+]
 ARTICLES_FILE = "docs/articles.json"
 
 HEADERS = {
@@ -46,12 +55,11 @@ def classify(title: str):
         categories.append(("決算インパクト", "プラス"))
     if "決算マイナス・インパクト" in title:
         categories.append(("決算インパクト", "マイナス"))
-    if "今週の話題株ダイジェスト" in title:
+    if "話題株ダイジェスト" in title:
         categories.append(("話題株", None))
     if "ストップ高" in title and "ストップ安" in title:
-        # 1つの記事でストップ高・ストップ安の両方を扱っている
-        categories.append(("ストップ高", None))
-        categories.append(("ストップ安", None))
+        # 1つの記事でストップ高・ストップ安の両方を扱っているため、1カテゴリにまとめる
+        categories.append(("ストップ高安", None))
     return categories
 
 
@@ -72,34 +80,44 @@ def save_articles(items: list):
 
 
 def fetch_articles() -> list:
-    res = requests.get(CATEGORY_URL, headers=HEADERS, timeout=20)
-    res.raise_for_status()
-    res.encoding = res.apparent_encoding
-
-    all_links = LINK_PATTERN.findall(res.text)
-    print(f"  [診断] status={res.status_code}, リンク総数={len(all_links)}")
-
     found = []
-    for url, year, month, day, title in all_links:
-        categories = classify(title)
-        if not categories:
+    seen_urls = set()
+
+    for url_page in SOURCE_URLS:
+        try:
+            res = requests.get(url_page, headers=HEADERS, timeout=20)
+            res.raise_for_status()
+            res.encoding = res.apparent_encoding
+        except Exception as e:
+            print(f"  [診断] {url_page}: 取得エラー {e}")
             continue
-        if url.startswith("/"):
-            url = "https://s.kabutan.jp" + url
-        date_iso = f"{year}-{month}-{day}"
-        for category, kind in categories:
-            found.append({
-                "date": date_iso,
-                "title": title.strip(),
-                "url": url,
-                "category": category,
-                "kind": kind,
-            })
+
+        all_links = LINK_PATTERN.findall(res.text)
+        print(f"  [診断] {url_page} : status={res.status_code}, リンク総数={len(all_links)}")
+
+        for url, year, month, day, title in all_links:
+            categories = classify(title)
+            if not categories:
+                continue
+            if url.startswith("/"):
+                url = "https://s.kabutan.jp" + url
+            if url in seen_urls:
+                continue  # 別ページで既に見つけた記事は重複カウントしない
+            seen_urls.add(url)
+            date_iso = f"{year}-{month}-{day}"
+            for category, kind in categories:
+                found.append({
+                    "date": date_iso,
+                    "title": title.strip(),
+                    "url": url,
+                    "category": category,
+                    "kind": kind,
+                })
     return found
 
 
 def main():
-    print("株探（特集カテゴリ）を確認しています...")
+    print("株探のニュース一覧を確認しています...")
     found = fetch_articles()
     print(f"  見つかった対象記事: {len(found)} 件")
 
