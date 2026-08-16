@@ -180,7 +180,18 @@ def to_records(df: pd.DataFrame) -> list:
     records = df[cols].to_dict("records")
     for r in records:
         if "cap_label" in r:
-            r["cap"] = r.pop("cap_label")
+            cap = r.pop("cap_label")
+            # pandasは「その列が全部Noneだった」場合などに float の NaN に
+            # 変換してしまうことがある。NaNはJSONの正式な値ではなく、
+            # ブラウザ側でファイル全体の読み込みが失敗する原因になるため、
+            # ここで確実に None（JSONではnull）に統一する。
+            if cap is not None and not isinstance(cap, str):
+                try:
+                    if pd.isna(cap):
+                        cap = None
+                except TypeError:
+                    pass
+            r["cap"] = cap
     return records
 
 
