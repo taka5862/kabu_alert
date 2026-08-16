@@ -4,51 +4,51 @@
       {
         "code": "5942",
         "name": "日本フイルコン",
-        "cap": null
+        "cap": "158億円"
       },
       {
         "code": "3436",
         "name": "SUMCO",
-        "cap": null
+        "cap": "1.66兆円"
       },
       {
         "code": "7041",
         "name": "CRGホールディングス",
-        "cap": null
+        "cap": "19億円"
       }
     ],
     "B": [
       {
         "code": "9425",
         "name": "ReYuu Japan",
-        "cap": null
+        "cap": NaN
       },
       {
         "code": "5942",
         "name": "日本フイルコン",
-        "cap": null
+        "cap": "158億円"
       },
       {
         "code": "7041",
         "name": "CRGホールディングス",
-        "cap": null
+        "cap": "19億円"
       },
       {
         "code": "5967",
         "name": "TONE",
-        "cap": null
+        "cap": "116億円"
       },
       {
         "code": "3436",
         "name": "SUMCO",
-        "cap": null
+        "cap": "1.66兆円"
       }
     ],
     "C": [
       {
         "code": "265A",
         "name": "Hmcomm",
-        "cap": null
+        "cap": "33億円"
       }
     ],
     "D": [],
@@ -59,24 +59,24 @@
       {
         "code": "6522",
         "name": "アスタリスク",
-        "cap": null
+        "cap": "153億円"
       }
     ],
     "B": [
       {
         "code": "7063",
         "name": "Birdman",
-        "cap": null
+        "cap": "36億円"
       },
       {
         "code": "7602",
         "name": "レダックス",
-        "cap": null
+        "cap": "46億円"
       },
       {
         "code": "7376",
         "name": "BCC",
-        "cap": null
+        "cap": "47億円"
       }
     ],
     "C": [],
@@ -89,12 +89,12 @@
       {
         "code": "4575",
         "name": "キャンバス",
-        "cap": null
+        "cap": "136億円"
       },
       {
         "code": "2492",
         "name": "インフォマート",
-        "cap": null
+        "cap": "1,281億円"
       }
     ],
     "C": [],
@@ -106,26 +106,26 @@
       {
         "code": "4424",
         "name": "Amazia",
-        "cap": null
+        "cap": "24億円"
       }
     ],
     "B": [
       {
         "code": "264A",
         "name": "Schoo",
-        "cap": null
+        "cap": "44億円"
       }
     ],
     "C": [
       {
         "code": "264A",
         "name": "Schoo",
-        "cap": null
+        "cap": "44億円"
       },
       {
         "code": "9170",
         "name": "成友興業",
-        "cap": null
+        "cap": "63億円"
       }
     ],
     "D": [],
@@ -133,7 +133,7 @@
       {
         "code": "4596",
         "name": "窪田製薬ホールディングス",
-        "cap": null
+        "cap": "162億円"
       }
     ]
   },
@@ -143,17 +143,17 @@
       {
         "code": "4591",
         "name": "リボミック",
-        "cap": null
+        "cap": "53億円"
       },
       {
         "code": "3625",
         "name": "テックファームホールディングス",
-        "cap": null
+        "cap": "48億円"
       },
       {
         "code": "4199",
         "name": "ワンダープラネット",
-        "cap": null
+        "cap": "20億円"
       }
     ],
     "C": [],
@@ -166,19 +166,19 @@
       {
         "code": "9170",
         "name": "成友興業",
-        "cap": null
+        "cap": "91億円"
       },
       {
         "code": "7815",
         "name": "東京ボード工業",
-        "cap": null
+        "cap": "16億円"
       }
     ],
     "C": [
       {
         "code": "9170",
         "name": "成友興業",
-        "cap": null
+        "cap": "91億円"
       }
     ],
     "D": [],
@@ -189,19 +189,19 @@
       {
         "code": "7314",
         "name": "小田原機器",
-        "cap": null
+        "cap": "48億円"
       }
     ],
     "B": [
       {
         "code": "7314",
         "name": "小田原機器",
-        "cap": null
+        "cap": "48億円"
       },
       {
         "code": "2997",
         "name": "ストレージ王",
-        "cap": null
+        "cap": "20億円"
       }
     ],
     "C": [],
@@ -213,26 +213,26 @@
       {
         "code": "4424",
         "name": "Amazia",
-        "cap": null
+        "cap": "27億円"
       },
       {
         "code": "5018",
         "name": "MORESCO",
-        "cap": null
+        "cap": "225億円"
       }
     ],
     "B": [
       {
         "code": "5240",
         "name": "monoAI technology",
-        "cap": null
+        "cap": "22億円"
       }
     ],
     "C": [
       {
         "code": "472A",
         "name": "ミラティブ",
-        "cap": null
+        "cap": "95億円"
       }
     ],
     "D": [],
@@ -240,7 +240,7 @@
       {
         "code": "4381",
         "name": "ビープラッツ",
-        "cap": null
+        "cap": "9億円"
       }
     ]
   },
@@ -250,24 +250,24 @@
       {
         "code": "5240",
         "name": "monoAI technology",
-        "cap": null
+        "cap": "28億円"
       },
       {
         "code": "195A",
         "name": "MUSCAT GROUP",
-        "cap": null
+        "cap": "26億円"
       },
       {
         "code": "6227",
         "name": "AIメカテック",
-        "cap": null
+        "cap": "1,468億円"
       }
     ],
     "C": [
       {
         "code": "195A",
         "name": "MUSCAT GROUP",
-        "cap": null
+        "cap": "26億円"
       }
     ],
     "D": [],
@@ -275,12 +275,12 @@
       {
         "code": "5240",
         "name": "monoAI technology",
-        "cap": null
+        "cap": "28億円"
       },
       {
         "code": "6227",
         "name": "AIメカテック",
-        "cap": null
+        "cap": "1,468億円"
       }
     ]
   },
@@ -289,29 +289,29 @@
       {
         "code": "4381",
         "name": "ビープラッツ",
-        "cap": null
+        "cap": "19億円"
       }
     ],
     "B": [
       {
         "code": "6836",
         "name": "ぷらっとホーム",
-        "cap": null
+        "cap": "44億円"
       },
       {
         "code": "3996",
         "name": "サインポスト",
-        "cap": null
+        "cap": "32億円"
       },
       {
         "code": "4174",
         "name": "アピリッツ",
-        "cap": null
+        "cap": "39億円"
       },
       {
         "code": "4418",
         "name": "JDSC",
-        "cap": null
+        "cap": "149億円"
       }
     ],
     "C": [],
@@ -323,24 +323,24 @@
       {
         "code": "9326",
         "name": "関通",
-        "cap": null
+        "cap": "53億円"
       }
     ],
     "B": [
       {
         "code": "7031",
         "name": "インバウンドテック",
-        "cap": null
+        "cap": "19億円"
       },
       {
         "code": "1407",
         "name": "ウエストホールディングス",
-        "cap": null
+        "cap": "1,290億円"
       },
       {
         "code": "9326",
         "name": "関通",
-        "cap": null
+        "cap": "53億円"
       }
     ],
     "C": [],
@@ -352,51 +352,51 @@
       {
         "code": "150A",
         "name": "JSH",
-        "cap": null
+        "cap": "26億円"
       }
     ],
     "B": [
       {
         "code": "9388",
         "name": "パパネッツ",
-        "cap": null
+        "cap": "35億円"
       },
       {
         "code": "157A",
         "name": "グリーンモンスター",
-        "cap": null
+        "cap": "33億円"
       },
       {
         "code": "9238",
         "name": "バリュークリエーション",
-        "cap": null
+        "cap": NaN
       },
       {
         "code": "150A",
         "name": "JSH",
-        "cap": null
+        "cap": "26億円"
       }
     ],
     "C": [
       {
         "code": "9388",
         "name": "パパネッツ",
-        "cap": null
+        "cap": "35億円"
       },
       {
         "code": "157A",
         "name": "グリーンモンスター",
-        "cap": null
+        "cap": "33億円"
       },
       {
         "code": "150A",
         "name": "JSH",
-        "cap": null
+        "cap": "26億円"
       },
       {
         "code": "9238",
         "name": "バリュークリエーション",
-        "cap": null
+        "cap": NaN
       }
     ],
     "D": [],
@@ -407,21 +407,21 @@
       {
         "code": "150A",
         "name": "JSH",
-        "cap": null
+        "cap": "31億円"
       }
     ],
     "B": [
       {
         "code": "150A",
         "name": "JSH",
-        "cap": null
+        "cap": "31億円"
       }
     ],
     "C": [
       {
         "code": "150A",
         "name": "JSH",
-        "cap": null
+        "cap": "31億円"
       }
     ],
     "D": [],
@@ -429,7 +429,7 @@
       {
         "code": "150A",
         "name": "JSH",
-        "cap": null
+        "cap": "31億円"
       }
     ]
   },
@@ -438,41 +438,41 @@
       {
         "code": "2354",
         "name": "YE DIGITAL",
-        "cap": null
+        "cap": "249億円"
       },
       {
         "code": "5575",
         "name": "Globee",
-        "cap": null
+        "cap": "56億円"
       },
       {
         "code": "296A",
         "name": "令和アカウンティング・ホールディングス",
-        "cap": null
+        "cap": "338億円"
       }
     ],
     "B": [
       {
         "code": "296A",
         "name": "令和アカウンティング・ホールディングス",
-        "cap": null
+        "cap": "338億円"
       },
       {
         "code": "9238",
         "name": "バリュークリエーション",
-        "cap": null
+        "cap": NaN
       }
     ],
     "C": [
       {
         "code": "296A",
         "name": "令和アカウンティング・ホールディングス",
-        "cap": null
+        "cap": "338億円"
       },
       {
         "code": "9238",
         "name": "バリュークリエーション",
-        "cap": null
+        "cap": NaN
       }
     ],
     "D": [],
@@ -484,22 +484,22 @@
       {
         "code": "4052",
         "name": "フィーチャ",
-        "cap": null
+        "cap": "18億円"
       },
       {
         "code": "3803",
         "name": "イメージ情報開発",
-        "cap": null
+        "cap": "18億円"
       },
       {
         "code": "4424",
         "name": "Amazia",
-        "cap": null
+        "cap": "24億円"
       },
       {
         "code": "4073",
         "name": "ジィ・シィ企画",
-        "cap": null
+        "cap": "13億円"
       }
     ],
     "C": [],
@@ -508,7 +508,7 @@
       {
         "code": "3907",
         "name": "シリコンスタジオ",
-        "cap": null
+        "cap": "27億円"
       }
     ]
   },
@@ -517,29 +517,29 @@
       {
         "code": "1518",
         "name": "三井松島ホールディングス",
-        "cap": null
+        "cap": "1,276億円"
       },
       {
         "code": "5242",
         "name": "アイズ",
-        "cap": null
+        "cap": "20億円"
       }
     ],
     "B": [
       {
         "code": "2459",
         "name": "アウンコンサルティング",
-        "cap": null
+        "cap": "16億円"
       },
       {
         "code": "5242",
         "name": "アイズ",
-        "cap": null
+        "cap": "20億円"
       },
       {
         "code": "3907",
         "name": "シリコンスタジオ",
-        "cap": null
+        "cap": "31億円"
       }
     ],
     "C": [],
@@ -548,7 +548,7 @@
       {
         "code": "3907",
         "name": "シリコンスタジオ",
-        "cap": null
+        "cap": "31億円"
       }
     ]
   },
@@ -558,7 +558,7 @@
       {
         "code": "5240",
         "name": "monoAI technology",
-        "cap": null
+        "cap": "26億円"
       }
     ],
     "C": [],
@@ -570,24 +570,24 @@
       {
         "code": "5242",
         "name": "アイズ",
-        "cap": null
+        "cap": "28億円"
       },
       {
         "code": "4052",
         "name": "フィーチャ",
-        "cap": null
+        "cap": "23億円"
       }
     ],
     "B": [
       {
         "code": "8995",
         "name": "誠建設工業",
-        "cap": null
+        "cap": "19億円"
       },
       {
         "code": "4052",
         "name": "フィーチャ",
-        "cap": null
+        "cap": "23億円"
       }
     ],
     "C": [],
@@ -596,7 +596,7 @@
       {
         "code": "3260",
         "name": "エスポア",
-        "cap": null
+        "cap": "43億円"
       }
     ]
   },
@@ -605,14 +605,14 @@
       {
         "code": "2767",
         "name": "円谷フィールズホールディングス",
-        "cap": null
+        "cap": "1,263億円"
       }
     ],
     "B": [
       {
         "code": "7063",
         "name": "Birdman",
-        "cap": null
+        "cap": "40億円"
       }
     ],
     "C": [],
@@ -621,7 +621,7 @@
       {
         "code": "8995",
         "name": "誠建設工業",
-        "cap": null
+        "cap": "22億円"
       }
     ]
   },
@@ -630,24 +630,24 @@
       {
         "code": "2767",
         "name": "円谷フィールズホールディングス",
-        "cap": null
+        "cap": "1,524億円"
       },
       {
         "code": "9697",
         "name": "カプコン",
-        "cap": null
+        "cap": "2.25兆円"
       }
     ],
     "B": [
       {
         "code": "2767",
         "name": "円谷フィールズホールディングス",
-        "cap": null
+        "cap": "1,524億円"
       },
       {
         "code": "9697",
         "name": "カプコン",
-        "cap": null
+        "cap": "2.25兆円"
       }
     ],
     "C": [],
@@ -656,7 +656,7 @@
       {
         "code": "2767",
         "name": "円谷フィールズホールディングス",
-        "cap": null
+        "cap": "1,524億円"
       }
     ]
   },
@@ -665,19 +665,19 @@
       {
         "code": "7740",
         "name": "タムロン",
-        "cap": null
+        "cap": "2,449億円"
       },
       {
         "code": "6364",
         "name": "AIRMAN",
-        "cap": null
+        "cap": "716億円"
       }
     ],
     "B": [
       {
         "code": "6364",
         "name": "AIRMAN",
-        "cap": null
+        "cap": "716億円"
       }
     ],
     "C": [],
@@ -689,12 +689,12 @@
       {
         "code": "4220",
         "name": "リケンテクノス",
-        "cap": null
+        "cap": "1,136億円"
       },
       {
         "code": "2737",
         "name": "トーメンデバイス",
-        "cap": null
+        "cap": "1,439億円"
       }
     ],
     "B": [],
@@ -702,12 +702,12 @@
       {
         "code": "285A",
         "name": "キオクシアホールディングス",
-        "cap": null
+        "cap": "25.39兆円"
       },
       {
         "code": "6525",
         "name": "KOKUSAI ELECTRIC",
-        "cap": null
+        "cap": "1.77兆円"
       }
     ],
     "D": [],
@@ -715,7 +715,7 @@
       {
         "code": "2737",
         "name": "トーメンデバイス",
-        "cap": null
+        "cap": "1,439億円"
       }
     ]
   },
@@ -724,49 +724,49 @@
       {
         "code": "2737",
         "name": "トーメンデバイス",
-        "cap": null
+        "cap": "1,779億円"
       },
       {
         "code": "9110",
         "name": "NSユナイテッド海運",
-        "cap": null
+        "cap": "2,287億円"
       },
       {
         "code": "6952",
         "name": "カシオ計算機",
-        "cap": null
+        "cap": "5,145億円"
       },
       {
         "code": "4052",
         "name": "フィーチャ",
-        "cap": null
+        "cap": "25億円"
       },
       {
         "code": "6810",
         "name": "マクセル",
-        "cap": null
+        "cap": "1,207億円"
       }
     ],
     "B": [
       {
         "code": "4073",
         "name": "ジィ・シィ企画",
-        "cap": null
+        "cap": "13億円"
       },
       {
         "code": "6810",
         "name": "マクセル",
-        "cap": null
+        "cap": "1,207億円"
       },
       {
         "code": "6952",
         "name": "カシオ計算機",
-        "cap": null
+        "cap": "5,145億円"
       },
       {
         "code": "4381",
         "name": "ビープラッツ",
-        "cap": null
+        "cap": "11億円"
       }
     ],
     "C": [],
@@ -775,12 +775,12 @@
       {
         "code": "4052",
         "name": "フィーチャ",
-        "cap": null
+        "cap": "25億円"
       },
       {
         "code": "2737",
         "name": "トーメンデバイス",
-        "cap": null
+        "cap": "1,779億円"
       }
     ]
   },
@@ -789,49 +789,49 @@
       {
         "code": "3276",
         "name": "JPMC",
-        "cap": null
+        "cap": "394億円"
       },
       {
         "code": "2737",
         "name": "トーメンデバイス",
-        "cap": null
+        "cap": "2,119億円"
       },
       {
         "code": "7480",
         "name": "スズデン",
-        "cap": null
+        "cap": "385億円"
       },
       {
         "code": "4073",
         "name": "ジィ・シィ企画",
-        "cap": null
+        "cap": "16億円"
       }
     ],
     "B": [
       {
         "code": "9444",
         "name": "トーシンホールディングス",
-        "cap": null
+        "cap": "19億円"
       },
       {
         "code": "4073",
         "name": "ジィ・シィ企画",
-        "cap": null
+        "cap": "16億円"
       },
       {
         "code": "6440",
         "name": "JUKI",
-        "cap": null
+        "cap": "191億円"
       },
       {
         "code": "4381",
         "name": "ビープラッツ",
-        "cap": null
+        "cap": "13億円"
       },
       {
         "code": "2737",
         "name": "トーメンデバイス",
-        "cap": null
+        "cap": "2,119億円"
       }
     ],
     "C": [],
@@ -840,17 +840,17 @@
       {
         "code": "4381",
         "name": "ビープラッツ",
-        "cap": null
+        "cap": "13億円"
       },
       {
         "code": "2737",
         "name": "トーメンデバイス",
-        "cap": null
+        "cap": "2,119億円"
       },
       {
         "code": "4073",
         "name": "ジィ・シィ企画",
-        "cap": null
+        "cap": "16億円"
       }
     ]
   },
@@ -859,24 +859,24 @@
       {
         "code": "4746",
         "name": "東計電算",
-        "cap": null
+        "cap": "1,240億円"
       },
       {
         "code": "4073",
         "name": "ジィ・シィ企画",
-        "cap": null
+        "cap": "19億円"
       }
     ],
     "B": [
       {
         "code": "4635",
         "name": "東京インキ",
-        "cap": null
+        "cap": "228億円"
       },
       {
         "code": "4968",
         "name": "荒川化学工業",
-        "cap": null
+        "cap": "483億円"
       }
     ],
     "C": [],
@@ -885,7 +885,7 @@
       {
         "code": "4073",
         "name": "ジィ・シィ企画",
-        "cap": null
+        "cap": "19億円"
       }
     ]
   },
@@ -894,19 +894,19 @@
       {
         "code": "4052",
         "name": "フィーチャ",
-        "cap": null
+        "cap": "27億円"
       },
       {
         "code": "6998",
         "name": "日本タングステン",
-        "cap": null
+        "cap": "135億円"
       }
     ],
     "B": [
       {
         "code": "4234",
         "name": "サンエー化研",
-        "cap": null
+        "cap": "90億円"
       }
     ],
     "C": [],
@@ -918,39 +918,39 @@
       {
         "code": "6998",
         "name": "日本タングステン",
-        "cap": null
+        "cap": "161億円"
       },
       {
         "code": "3422",
         "name": "J-MAX",
-        "cap": null
+        "cap": "71億円"
       },
       {
         "code": "4527",
         "name": "ロート製薬",
-        "cap": null
+        "cap": "6,761億円"
       }
     ],
     "B": [
       {
         "code": "6998",
         "name": "日本タングステン",
-        "cap": null
+        "cap": "161億円"
       },
       {
         "code": "3422",
         "name": "J-MAX",
-        "cap": null
+        "cap": "71億円"
       },
       {
         "code": "4527",
         "name": "ロート製薬",
-        "cap": null
+        "cap": "6,761億円"
       },
       {
         "code": "4234",
         "name": "サンエー化研",
-        "cap": null
+        "cap": "107億円"
       }
     ],
     "C": [],
@@ -959,12 +959,12 @@
       {
         "code": "4234",
         "name": "サンエー化研",
-        "cap": null
+        "cap": "107億円"
       },
       {
         "code": "6998",
         "name": "日本タングステン",
-        "cap": null
+        "cap": "161億円"
       }
     ]
   },
@@ -973,89 +973,89 @@
       {
         "code": "6098",
         "name": "リクルートホールディングス",
-        "cap": null
+        "cap": "23.80兆円"
       },
       {
         "code": "6570",
         "name": "共和コーポレーション",
-        "cap": null
+        "cap": "158億円"
       },
       {
         "code": "4052",
         "name": "フィーチャ",
-        "cap": null
+        "cap": "37億円"
       },
       {
         "code": "3422",
         "name": "J-MAX",
-        "cap": null
+        "cap": "83億円"
       },
       {
         "code": "4937",
         "name": "Waqoo",
-        "cap": null
+        "cap": "72億円"
       },
       {
         "code": "3374",
         "name": "内外テック",
-        "cap": null
+        "cap": "150億円"
       },
       {
         "code": "6138",
         "name": "ダイジェット工業",
-        "cap": null
+        "cap": "47億円"
       },
       {
         "code": "6743",
         "name": "大同信号",
-        "cap": null
+        "cap": "193億円"
       },
       {
         "code": "3676",
         "name": "デジタルハーツホールディングス",
-        "cap": null
+        "cap": "252億円"
       },
       {
         "code": "6258",
         "name": "平田機工",
-        "cap": null
+        "cap": "1,247億円"
       },
       {
         "code": "7567",
         "name": "栄電子",
-        "cap": null
+        "cap": "34億円"
       },
       {
         "code": "4631",
         "name": "DIC",
-        "cap": null
+        "cap": "5,118億円"
       }
     ],
     "B": [
       {
         "code": "6570",
         "name": "共和コーポレーション",
-        "cap": null
+        "cap": "158億円"
       },
       {
         "code": "4937",
         "name": "Waqoo",
-        "cap": null
+        "cap": "72億円"
       },
       {
         "code": "3422",
         "name": "J-MAX",
-        "cap": null
+        "cap": "83億円"
       },
       {
         "code": "6928",
         "name": "エノモト",
-        "cap": null
+        "cap": "211億円"
       },
       {
         "code": "3277",
         "name": "サンセイランディック",
-        "cap": null
+        "cap": "63億円"
       }
     ],
     "C": [],
@@ -1064,12 +1064,12 @@
       {
         "code": "3676",
         "name": "デジタルハーツホールディングス",
-        "cap": null
+        "cap": "252億円"
       },
       {
         "code": "3422",
         "name": "J-MAX",
-        "cap": null
+        "cap": "83億円"
       }
     ]
   },
@@ -1078,34 +1078,34 @@
       {
         "code": "6138",
         "name": "ダイジェット工業",
-        "cap": null
+        "cap": "59億円"
       },
       {
         "code": "3173",
         "name": "Cominix",
-        "cap": null
+        "cap": "107億円"
       },
       {
         "code": "3131",
         "name": "シンデン・ハイテックス",
-        "cap": null
+        "cap": "130億円"
       },
       {
         "code": "4052",
         "name": "フィーチャ",
-        "cap": null
+        "cap": "43億円"
       },
       {
         "code": "7957",
         "name": "フジコピアン",
-        "cap": null
+        "cap": "43億円"
       }
     ],
     "B": [
       {
         "code": "6138",
         "name": "ダイジェット工業",
-        "cap": null
+        "cap": "59億円"
       }
     ],
     "C": [],
@@ -1114,12 +1114,12 @@
       {
         "code": "6138",
         "name": "ダイジェット工業",
-        "cap": null
+        "cap": "59億円"
       },
       {
         "code": "4052",
         "name": "フィーチャ",
-        "cap": null
+        "cap": "43億円"
       }
     ]
   },
@@ -1128,56 +1128,56 @@
       {
         "code": "4255",
         "name": "THECOO",
-        "cap": null
+        "cap": "67億円"
       },
       {
         "code": "6340",
         "name": "澁谷工業",
-        "cap": null
+        "cap": "1,438億円"
       },
       {
         "code": "3895",
         "name": "ハビックス",
-        "cap": null
+        "cap": "40億円"
       }
     ],
     "B": [
       {
         "code": "3895",
         "name": "ハビックス",
-        "cap": null
+        "cap": "40億円"
       },
       {
         "code": "7694",
         "name": "いつも",
-        "cap": null
+        "cap": "31億円"
       },
       {
         "code": "6340",
         "name": "澁谷工業",
-        "cap": null
+        "cap": "1,438億円"
       },
       {
         "code": "194A",
         "name": "WOLVES HAND",
-        "cap": null
+        "cap": "152億円"
       },
       {
         "code": "6027",
         "name": "弁護士ドットコム",
-        "cap": null
+        "cap": "720億円"
       }
     ],
     "C": [
       {
         "code": "194A",
         "name": "WOLVES HAND",
-        "cap": null
+        "cap": "152億円"
       },
       {
         "code": "146A",
         "name": "コロンビア・ワークス",
-        "cap": null
+        "cap": "309億円"
       }
     ],
     "D": [],
@@ -1185,7 +1185,7 @@
       {
         "code": "6862",
         "name": "ミナトホールディングス",
-        "cap": null
+        "cap": "273億円"
       }
     ]
   },
