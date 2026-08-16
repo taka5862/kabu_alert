@@ -15,8 +15,7 @@
     --border: #e5e7eb;
     --c-impact: #d81b60;
     --c-topic: #f59e0b;
-    --c-high: #dc2626;
-    --c-low: #2563eb;
+    --c-stop: #dc2626;
   }
   * { box-sizing: border-box; }
   body {
@@ -115,7 +114,7 @@
   /* ---- カテゴリタブ ---- */
   #tabs {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 5px;
     margin-bottom: 8px;
   }
@@ -128,13 +127,12 @@
     font-size: 11px;
     cursor: pointer;
   }
-  .tab-btn.all { grid-column: span 3; }
+  .tab-btn.all { grid-column: span 2; }
   .tab-btn.active { color: #fff; font-weight: bold; }
   .tab-btn.active[data-filter="all"] { background: var(--text); border-color: var(--text); }
   .tab-btn.active[data-filter="決算インパクト"] { background: var(--c-impact); border-color: var(--c-impact); }
   .tab-btn.active[data-filter="話題株"] { background: var(--c-topic); border-color: var(--c-topic); }
-  .tab-btn.active[data-filter="ストップ高"] { background: var(--c-high); border-color: var(--c-high); }
-  .tab-btn.active[data-filter="ストップ安"] { background: var(--c-low); border-color: var(--c-low); }
+  .tab-btn.active[data-filter="ストップ高安"] { background: var(--c-stop); border-color: var(--c-stop); }
 
   /* ---- 記事リスト ---- */
   .item {
@@ -147,8 +145,7 @@
   }
   .item.決算インパクト { border-left-color: var(--c-impact); }
   .item.話題株 { border-left-color: var(--c-topic); }
-  .item.ストップ高 { border-left-color: var(--c-high); }
-  .item.ストップ安 { border-left-color: var(--c-low); }
+  .item.ストップ高安 { border-left-color: var(--c-stop); }
   .item a { color: var(--text); text-decoration: none; font-size: 12px; line-height: 1.35; }
   .item .kind {
     display: inline-block; font-size: 10px; font-weight: bold;
@@ -156,8 +153,7 @@
   }
   .item.決算インパクト .kind { color: var(--c-impact); background: #fbe4ec; }
   .item.話題株 .kind { color: var(--c-topic); background: #fef3c7; }
-  .item.ストップ高 .kind { color: var(--c-high); background: #fee2e2; }
-  .item.ストップ安 .kind { color: var(--c-low); background: #e3ecfd; }
+  .item.ストップ高安 .kind { color: var(--c-stop); background: #fee2e2; }
   .item .date-label { font-size: 10px; color: var(--muted); margin-left: 4px; }
   #status { color: var(--muted); font-size: 12px; padding: 16px 0; }
 </style>
@@ -184,8 +180,7 @@
     <button class="tab-btn all active" data-filter="all">すべて</button>
     <button class="tab-btn" data-filter="決算インパクト">決算インパクト</button>
     <button class="tab-btn" data-filter="話題株">話題株</button>
-    <button class="tab-btn" data-filter="ストップ高">ストップ高</button>
-    <button class="tab-btn" data-filter="ストップ安">ストップ安</button>
+    <button class="tab-btn" data-filter="ストップ高安">ストップ高安</button>
   </div>
 </header>
 
