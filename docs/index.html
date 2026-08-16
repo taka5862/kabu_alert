@@ -50,7 +50,7 @@
     min-width: 0;
   }
   .col-left {
-    flex: 0 0 32%;
+    flex: 0 0 42%;
   }
   .col-right {
     flex: 1;
@@ -232,6 +232,11 @@ function chartUrl(code) {
   return `https://kabutan.jp/stock/chart?code=${encodeURIComponent(code)}`;
 }
 
+function truncateName(name, maxLen = 7) {
+  if (!name) return "";
+  return name.length > maxLen ? name.slice(0, maxLen) + "…" : name;
+}
+
 function formatDateLabel(isoDate) {
   const d = new Date(isoDate + "T00:00:00+09:00");
   return `${d.getMonth() + 1}/${d.getDate()}(${WEEKDAYS[d.getDay()]})`;
@@ -260,7 +265,7 @@ function buildSection(key, dayData) {
       a.href = chartUrl(s.code);
       a.target = "_blank";
       a.rel = "noopener";
-      a.innerHTML = `<span class="stock-code">${s.code}</span>${s.name}${s.cap ? ` <span class="stock-cap">${s.cap}</span>` : ""}`;
+      a.innerHTML = `<span class="stock-code">${s.code}</span>${truncateName(s.name)}${s.cap ? ` <span class="stock-cap">${s.cap}</span>` : ""}`;
       li.appendChild(a);
       ul.appendChild(li);
     });
