@@ -9,6 +9,7 @@ kabu_lib.py
 
 import re
 import io
+import os
 import time
 import requests
 import pandas as pd
@@ -16,6 +17,10 @@ import pandas as pd
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 }
+
+# J-Quants API（発行済株式数の取得に使用）
+JQUANTS_API_KEY = os.environ.get("JQUANTS_API_KEY")
+JQUANTS_BASE = "https://api.jquants.com/v2"
 
 # 東証公式「制限値幅」テーブル（2026/08/10時点）
 # (基準値段の上限（未満）, その価格帯の制限値幅)
@@ -182,8 +187,48 @@ def to_records(df: pd.DataFrame) -> list:
 # ==== 時価総額（毎回、その時点の終値ベースで計算）====
 
 
-def fetch_shares_outstanding(code: str) -> int:
-    """Yahoo!ファイナンスの個別銘柄ページから「発行済株式数」を取得する（1回だけリトライする）"""
+def _to_jquants_code(code: str) -> str:
+    """kabudragon等で使われる4桁コードを、J-Quantsの5桁コードに変換する（末尾に0を付与）"""
+    if code.isdigit() and len(code) == 4:
+        return code + "0"
+    return code
+
+
+def _fetch_shares_jquants(code: str) -> int:
+    """J-Quants APIの財務情報から発行済株式数を取得する（無料プランは12週間遅延だが、
+    株式数はほぼ変わらないため実用上問題ない）"""
+    if not JQUANTS_API_KEY:
+        return None
+    jq_code = _to_jquants_code(code)
+    headers = {"x-api-key": JQUANTS_API_KEY}
+    try:
+        res = requests.get(
+            f"{JQUANTS_BASE}/fins/summary",
+            headers=headers,
+            params={"code": jq_code},
+            timeout=20,
+        )
+        res.raise_for_status()
+        data = res.json().get("data", [])
+        if not data:
+            print(f"    [J-Quants] {code}: 財務データが見つかりませんでした")
+            return None
+        # 一番新しい開示のレコードを使う
+        latest = sorted(data, key=lambda d: str(d.get("DisclosedDate", "")), reverse=True)[0]
+        for key, value in latest.items():
+            if "Share" in key and value not in (None, "", "0"):
+                try:
+                    return int(float(value))
+                except (TypeError, ValueError):
+                    continue
+        print(f"    [J-Quants] {code}: 株式数のフィールドが見つかりませんでした。キー一覧={list(latest.keys())}")
+    except Exception as e:
+        print(f"    [J-Quants] {code}: 取得エラー {e}")
+    return None
+
+
+def _fetch_shares_yahoo(code: str) -> int:
+    """Yahoo!ファイナンスの個別銘柄ページから「発行済株式数」を取得する（J-Quantsが使えない場合の予備）"""
     url = f"https://finance.yahoo.co.jp/quote/{code}.T"
     for attempt in range(2):
         try:
@@ -192,14 +237,22 @@ def fetch_shares_outstanding(code: str) -> int:
             m = re.search(r"発行済株式数[^0-9]*([\d,]+)\s*株", res.text)
             if m:
                 return int(m.group(1).replace(",", ""))
-            print(f"    [発行済株式数] {code}: パターンが見つかりませんでした（status={res.status_code}, 本文長={len(res.text)}）")
             return None
-        except Exception as e:
+        except Exception:
             if attempt == 0:
-                time.sleep(2)  # 一時的なエラーの可能性があるので少し待って1回だけ再試行
+                time.sleep(2)
                 continue
-            print(f"    [発行済株式数] {code}: 取得エラー（リトライ後も失敗） {e}")
     return None
+
+
+def fetch_shares_outstanding(code: str) -> int:
+    """発行済株式数を取得する。J-Quants APIキーがあればそちらを優先し、
+    ダメだった場合のみYahoo!ファイナンスにフォールバックする。"""
+    if JQUANTS_API_KEY:
+        shares = _fetch_shares_jquants(code)
+        if shares:
+            return shares
+    return _fetch_shares_yahoo(code)
 
 
 def format_market_cap(yen: float) -> str:
