@@ -4065,73 +4065,78 @@
   "2026-09-28": {
     "A": [
       {
-        "code": "3143",
-        "name": "オーウイル(株)",
-        "cap": null
-      },
-      {
-        "code": "4073",
-        "name": "(株)ジィ・シィ企画",
-        "cap": null
-      },
-      {
-        "code": "4178",
-        "name": "(株)Ｓｈａｒｉｎｇ　Ｉｎｎｏｖａｔｉｏｎｓ",
-        "cap": null
-      },
-      {
-        "code": "5542",
-        "name": "新報国マテリアル(株)",
-        "cap": null
-      },
-      {
         "code": "6533",
-        "name": "(株)Ｏｒｃｈｅｓｔｒａ　Ｈｏｌｄｉｎｇｓ",
-        "cap": null
-      },
-      {
-        "code": "6904",
-        "name": "原田工業(株)",
+        "name": "Orchestra Holdings",
         "cap": null
       },
       {
         "code": "7133",
-        "name": "ＨＹＵＧＡ　ＰＲＩＭＡＲＹ　ＣＡＲＥ(株)",
-        "cap": null
-      },
-      {
-        "code": "7590",
-        "name": "(株)タカショー",
-        "cap": null
-      },
-      {
-        "code": "7883",
-        "name": "サンメッセ(株)",
-        "cap": null
-      },
-      {
-        "code": "9027",
-        "name": "(株)ロジネットジャパン9027札証掲示板",
-        "cap": null
-      }
-    ],
-    "C": [
-      {
-        "code": "3143",
-        "name": "オーウイル(株)",
-        "cap": null
+        "name": "HYUGA PRIMARY CARE",
+        "cap": "119億円"
       },
       {
         "code": "4178",
-        "name": "(株)Ｓｈａｒｉｎｇ　Ｉｎｎｏｖａｔｉｏｎｓ",
+        "name": "Sharing Innovations",
+        "cap": "25億円"
+      },
+      {
+        "code": "3143",
+        "name": "オーウイル",
+        "cap": "83億円"
+      },
+      {
+        "code": "6904",
+        "name": "原田工業",
+        "cap": "225億円"
+      },
+      {
+        "code": "4073",
+        "name": "ジィ・シィ企画",
+        "cap": "19億円"
+      }
+    ],
+    "B": [],
+    "C": [
+      {
+        "code": "7133",
+        "name": "HYUGA PRIMARY CARE",
+        "cap": "119億円"
+      },
+      {
+        "code": "6533",
+        "name": "Orchestra Holdings",
         "cap": null
       },
       {
-        "code": "5542",
-        "name": "新報国マテリアル(株)",
-        "cap": null
+        "code": "6904",
+        "name": "原田工業",
+        "cap": "225億円"
+      },
+      {
+        "code": "3143",
+        "name": "オーウイル",
+        "cap": "83億円"
+      },
+      {
+        "code": "4178",
+        "name": "Sharing Innovations",
+        "cap": "25億円"
       }
-    ]
+    ],
+    "D": [
+      {
+        "code": "3143",
+        "name": "オーウイル",
+        "cap": "83億円"
+      },
+      {
+        "code": "4178",
+        "name": "Sharing Innovations",
+        "cap": "25億円"
+      }
+    ],
+    "E": [],
+    "F": []
   },
   "2026-09-29": {
     "A": [
